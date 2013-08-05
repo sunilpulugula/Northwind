@@ -24,7 +24,7 @@ public class ProductAppController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap model)
 	{
-		logger.error("String index method in controller");
+		logger.error("Starting index method in controller");
 		//model.addAttribute("productList", productService.getAllProducts());
 		model.addAttribute("message","hey hello world");
 		
@@ -42,7 +42,10 @@ public class ProductAppController {
 		productlist.add(product1);
 		model.addAttribute("products", productlist);
 		
+		logger.error("message : "+model.get("message"));
+		logger.error("products : "+model.get("products"));
 		logger.error("Ending index method in controller");
+		
 		return "index";
 	}
 }
