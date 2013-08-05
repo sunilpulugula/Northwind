@@ -1,9 +1,6 @@
 package com.imaginea.productapp.dao;
 
-import java.util.List;
-
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,20 +37,33 @@ public class ProductDAOTest {
 	}
 
 	@Test
-	public void TestForAllProducts() {
+	public void TestForGetAllProducts() {
 
-		List products = productDao.getAllProducts();
-		Integer preCount = products.size();
-
+		Integer preCount = productDao.getAllProducts().size();
 		Product newProduct = new Product();
 		newProduct.setName("TV");
 		newProduct.setPrice(300.00f);
 		productDao.createProduct(newProduct);
-
-		List Newproducts = productDao.getAllProducts();
-		Integer postCount = Newproducts.size();
+		Integer postCount = productDao.getAllProducts().size();
 		Assert.assertEquals("Count of product is not correct", preCount,
 				preCount);
 	}
+	
+	@Test
+	public void TestForUpdateProduct()
+	{
+	
+	}
+	
+	@Test
+	public void TestForDeleteProduct()
+	{
+		
+	}
 
+	@Test
+	public void TestForGetProductsByRange()
+	{
+		
+	}
 }
