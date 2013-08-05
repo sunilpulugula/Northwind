@@ -2,11 +2,14 @@ package com.imaginea.productapp.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.imaginea.productapp.dao.ProductDAO;
 import com.imaginea.productapp.model.Product;
 
 public class ProductServiceImpl implements ProductService {
 
+	@Autowired
 	ProductDAO productDao;
 
 	@Override

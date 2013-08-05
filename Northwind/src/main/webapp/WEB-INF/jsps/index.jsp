@@ -25,7 +25,8 @@
 <body>
 
 <h2>List Of Products</h2>
-<c:if  test="${!empty productList}">
+<$helloworld>
+<!-- <c:if  test="${!empty productList}">
 <table class="data">
 <tr>
 	<th>PID</th>
@@ -41,7 +42,7 @@
 </c:forEach>
 </table>
 </c:if>
-
+-->
 
 </body>
 </html>

@@ -12,12 +12,13 @@ import com.imaginea.productapp.services.ProductService;
 public class ProductAppController {
 
 	@Autowired
-	ProductService productService = null;
+	ProductService productService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap model)
 	{
-		model.addAttribute("productList", productService.getAllProducts());
+		//model.addAttribute("productList", productService.getAllProducts());
+		model.addAttribute("helloworld","hey hello world");
 		return "index";
 	}
 }

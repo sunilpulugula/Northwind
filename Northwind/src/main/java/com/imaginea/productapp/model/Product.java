@@ -44,12 +44,4 @@ public class Product {
 	public void setPrice(float price) {
 		Price = price;
 	}
-
-	public Product(Integer pID, String name, float price) {
-		super();
-		PID = pID;
-		Name = name;
-		Price = price;
-	}
-
 }
