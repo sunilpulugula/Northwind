@@ -10,8 +10,8 @@
 
 	<c:if test="${!empty products}">
 Products are not empty
-<table BGCOLOR = #EEEEEE>
-			<tr bgcolor="blue">
+<table BGCOLOR = #E0F2F7 CELLSPACING = 5>
+			<tr bgcolor="lightsalmon">
 				<th>PID</th>
 				<th>Product Name</th>
 				<th>Price</th>

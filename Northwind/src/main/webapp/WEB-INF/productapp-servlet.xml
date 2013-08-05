@@ -23,12 +23,15 @@
 		</property>
 	</bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close" p:driverClassName="com.mysql.jdbc.Driver"
-		p:url="jdbc:mysql://localhost:3306/Northwind" p:username="root"
-		p:password="root" />
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		p:location="/WEB-INF/jdbc.properties" />
 		
-    <bean id="sessionFactory"
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
+		p:url="${jdbc.databaseurl}" p:username="${jdbc.username}" p:password="${jdbc.password}" />
+
+	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configurationClass">
@@ -47,7 +50,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="productDao" class="com.imaginea.productapp.dao.ProductDAOImpl" />
 	<bean id="productService" class="com.imaginea.productapp.services.ProductServiceImpl" />
 

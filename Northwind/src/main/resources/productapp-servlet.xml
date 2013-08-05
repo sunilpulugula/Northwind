@@ -7,11 +7,11 @@
 	http://www.springframework.org/schema/context/spring-context-3.1.xsd
 	http://www.springframework.org/schema/tx 
 	http://www.springframework.org/schema/tx/spring-tx.xsd">
-   
-   <context:component-scan
+
+	<context:component-scan
 		base-package="com.imaginea.productapp.model, com.imaginea.productapp.controller, com.imaginea.productapp.dao, com.imaginea.productapp.services" />
-   
-   <bean id="viewResolver"
+
+	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
@@ -22,14 +22,17 @@
 			<value>.jsp</value>
 		</property>
 	</bean>
-	
-	  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close" p:driverClassName="com.mysql.jdbc.Driver"
-		p:url="jdbc:mysql://localhost:3306/Northwind" p:username="root"
-		p:password="root" />
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		p:location="jdbc.properties" />
 		
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
+		p:url="${jdbc.databaseurl}" p:username="${jdbc.username}" p:password="${jdbc.password}" />
+
 	<bean id="productDao" class="com.imaginea.productapp.dao.ProductDAOImpl" />
-    <bean id="productService" class="com.imaginea.productapp.services.ProductServiceImpl" />
+	<bean id="productService" class="com.imaginea.productapp.services.ProductServiceImpl" />
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
@@ -50,11 +53,11 @@
 			</list>
 		</property>
 	</bean>
-    
-    <tx:annotation-driven />
-    <bean id="transactionManager"
-        class="org.springframework.orm.hibernate3.HibernateTransactionManager" >
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-	
-   </beans>
+
+	<tx:annotation-driven />
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+</beans>
