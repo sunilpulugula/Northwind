@@ -14,8 +14,7 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	@Override
 	public List<Product> getAllProducts() {
-		List<Product> products = sessionFactory.getCurrentSession().createQuery("from product").list();
-		return products;
+		return sessionFactory.getCurrentSession().createQuery("from Product").list();
 	}
 
 	@Override
