@@ -5,12 +5,13 @@
 </head>
 <body>
 
-	<h2>Index : List Of Products</h2>
+<Center>
+	<h1><b>List Of Products</b></h1>
 
 	<c:if test="${!empty products}">
 Products are not empty
-<table>
-			<tr>
+<table BGCOLOR = #EEEEEE>
+			<tr bgcolor="blue">
 				<th>PID</th>
 				<th>Product Name</th>
 				<th>Price</th>
@@ -24,5 +25,6 @@ Products are not empty
 			</c:forEach>
 		</table>
 	</c:if>
+</Center>
 </body>
 </html>

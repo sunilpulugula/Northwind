@@ -23,29 +23,16 @@ public class ProductAppController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap model)
 	{
-		logger.error("Starting index method in controller");
+		if(logger.isDebugEnabled())
+		{
+			logger.debug("Strated Executing method index in Product_App_Controller");
+		}
 		List<Product> products = productService.getAllProducts();
 		model.addAttribute("products", products);
-/*		model.addAttribute("message","hey hello world");
-		
-		Product product = new Product();
-		product.setName("pro1");
-		product.setPID(123);
-		product.setPrice(12.23f);
-		Product product1 = new Product();
-		product1.setName("pro2");
-		product1.setPID(1234);
-		product1.setPrice(123.23f);
-		
-		List<Product> productlist = new ArrayList<Product>();
-		productlist.add(product);
-		productlist.add(product1);
-		model.addAttribute("products", productlist);
-		
-		logger.error("message : "+model.get("message"));
-		logger.error("products : "+model.get("products"));
-		logger.error("Ending index method in controller");
-*/		
+		if(logger.isDebugEnabled())
+		{
+			logger.debug("Ending execution of method index in Product_App_Controller");
+		}
 		return "index";
 	}
 }

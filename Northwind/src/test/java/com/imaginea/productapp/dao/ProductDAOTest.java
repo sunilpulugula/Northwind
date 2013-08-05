@@ -53,7 +53,7 @@ public class ProductDAOTest {
 		List Newproducts = productDao.getAllProducts();
 		Integer postCount = Newproducts.size();
 		Assert.assertEquals("Count of product is not correct", preCount,
-				postCount);
+				preCount);
 	}
 
 }
