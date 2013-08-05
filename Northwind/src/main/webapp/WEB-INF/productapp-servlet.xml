@@ -8,6 +8,9 @@
 	http://www.springframework.org/schema/tx 
 	http://www.springframework.org/schema/tx/spring-tx.xsd">
    
+   <context:component-scan
+		base-package="com.imaginea.productapp.model, com.imaginea.productapp.controller, com.imaginea.productapp.dao, com.imaginea.productapp.services" />
+   
    <bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"

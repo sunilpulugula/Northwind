@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-	<title>Product Managing</title>
+	<title>List Of Products</title>
 	<style type="text/css">
 		body {
 			font-family: sans-serif;
@@ -24,20 +24,7 @@
 </head>
 <body>
 
-<h2>Products Managing</h2>
-
-<form:form method="post" action="add.html" commandName="contact">
-<table>
-	<tr>
-		<td colspan="2">
-			<input type="submit" value="Add"/>
-		</td>
-	</tr>
-</table>	
-</form:form>
-
-	
-<h3>Products</h3>
+<h2>List Of Products</h2>
 <c:if  test="${!empty productList}">
 <table class="data">
 <tr>
