@@ -4,7 +4,7 @@
 <html>
 <head>
 	<title>List Of Products</title>
-	<style type="text/css">
+	<!--<style type="text/css">
 		body {
 			font-family: sans-serif;
 		}
@@ -20,13 +20,17 @@
 			background-color: #5C82FF;
 			color: white;
 		}
-	</style>
+	</style>-->
 </head>
 <body>
 
+
+${message}
+
+
 <h2>List Of Products</h2>
-<$helloworld>
-<!-- <c:if  test="${!empty productList}">
+
+<c:if  test="${!empty products}">
 <table class="data">
 <tr>
 	<th>PID</th>
@@ -34,7 +38,7 @@
 	<th>Price</th>
 	<th>&nbsp;</th>
 </tr>
-<c:forEach items="${productList}" var="product">
+<c:forEach items="${products}" var="product">
 	<tr>
 		<td>${product.PID}, ${product.Name} </td>
 		<td>${product.Price}</td>
@@ -42,7 +46,7 @@
 </c:forEach>
 </table>
 </c:if>
--->
+
 
 </body>
 </html>
