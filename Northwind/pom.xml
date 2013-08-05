@@ -8,27 +8,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring.version>3.1.0.RELEASE</spring.version>
   </properties>
-  <build>
-    <sourceDirectory>com.imaginea.productapp.controller</sourceDirectory>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.3</version>
-        <configuration>
-          <warSourceDirectory>com/main/webapp</warSourceDirectory>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -125,4 +104,8 @@
 			<version>3.3.0.ga</version>
 		</dependency>
 		</dependencies>
+		
+		<build>
+		<finalName>Northwind</finalName>
+	</build>
 </project>
