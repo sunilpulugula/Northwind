@@ -11,8 +11,8 @@ import com.imaginea.productapp.services.ProductService;
 @Controller
 public class ProductAppController {
 
-	@Autowired
-	ProductService productService;
+	/*@Autowired
+	ProductService productService;*/
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap model)
