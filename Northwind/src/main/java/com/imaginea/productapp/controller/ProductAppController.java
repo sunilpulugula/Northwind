@@ -1,8 +1,5 @@
 package com.imaginea.productapp.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,14 +7,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.imaginea.productapp.model.Product;
 import com.imaginea.productapp.services.ProductService;
+import com.imaginea.productapp.services.ProductServiceImpl;
 
 @Controller
 public class ProductAppController {
 
-	/*@Autowired
-	ProductService productService;*/
+	
+	ProductService productService =  new ProductServiceImpl();
 	
 	private static final Logger logger = Logger.getLogger(ProductAppController.class);
 	
@@ -25,8 +22,8 @@ public class ProductAppController {
 	public String index(ModelMap model)
 	{
 		logger.error("Starting index method in controller");
-		//model.addAttribute("productList", productService.getAllProducts());
-		model.addAttribute("message","hey hello world");
+		model.addAttribute("products", productService.getAllProducts());
+/*		model.addAttribute("message","hey hello world");
 		
 		Product product = new Product();
 		product.setName("pro1");
@@ -45,7 +42,7 @@ public class ProductAppController {
 		logger.error("message : "+model.get("message"));
 		logger.error("products : "+model.get("products"));
 		logger.error("Ending index method in controller");
-		
+*/		
 		return "index";
 	}
 }

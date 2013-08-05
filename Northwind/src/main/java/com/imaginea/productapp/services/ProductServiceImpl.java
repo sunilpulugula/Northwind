@@ -10,7 +10,7 @@ import com.imaginea.productapp.model.Product;
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
-	ProductDAO productDao;
+	private ProductDAO productDao;
 
 	@Override
 	public List<Product> getAllProducts() {
