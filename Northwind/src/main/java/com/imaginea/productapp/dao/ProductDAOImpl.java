@@ -29,7 +29,7 @@ public class ProductDAOImpl implements ProductDAO {
 	@Transactional
 	public List<Product> getProductsByRange(Product startRange,
 			Product endingRange) {
-		List<Product> list = sessionFactory.getCurrentSession().createQuery("from product WHERE age BETWEEN 1 AND 5;").list();
+		List<Product> list = sessionFactory.getCurrentSession().createQuery("from product where PID between " + "'" + startRange.getPID() + "'" + " AND " +  "'" +  endingRange.getPID()  + "'" ).list();
 		return list;
 	}
 
