@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Integer createProduct(Product product) {
-		return this.createProduct(product);
+		return this.productDao.createProduct(product);
 	}
 
 }

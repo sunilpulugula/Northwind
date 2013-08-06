@@ -30,13 +30,18 @@ body {
 </head>
 <body>
 	<Center>
+	    <h1>
+			<b>Product Details</b>
+		</h1>
+		<br>
+		<br>
 		<c:if test="${!empty product}">
 			<form method="post" action="update" name="updateForm" onsubmit="">
 				<table>
 					<tr>
 						<td>Product ID</td>
 						<td><input type="text" name="Product_ID" id="Product_ID"
-							value="${product.PID}" /></td>
+							value="${product.PID}" readonly/></td>
 					</tr>
 					<tr>
 						<td>Product Name</td>

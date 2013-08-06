@@ -2,6 +2,8 @@ package com.imaginea.productapp.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,10 +52,81 @@ public class ProductAppController {
 
 	@RequestMapping("/edit/{PID}")
 	public String editProduct(@PathVariable("PID") Integer PID, ModelMap model) {
-		logger.error("Editing product with product id : " + PID);
 		Product product = productService.getProductByID(PID);
 		model.addAttribute("product", product);
 		return "update";
 	}
 
+	@RequestMapping(value = "/edit/update", method = RequestMethod.POST)
+	public String updateProduct(HttpServletRequest request) {
+
+		Integer pid = Integer.parseInt(request.getParameter("Product_ID"));
+		String productname = request.getParameter("Product_Name");
+		Float price = Float.parseFloat(request.getParameter("price"));
+		if (logger.isDebugEnabled()) {
+			logger.debug("Updating detail of the product with product ID : "
+					+ pid);
+		}
+		Product product = new Product();
+		product.setPID(pid);
+		product.setName(productname);
+		product.setPrice(price);
+
+		productService.saveProduct(product);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Updated detail of the product with product ID : "
+					+ pid);
+		}
+		return "redirect:/";
+	}
+
+	@RequestMapping(value = "/addProduct")
+	public String addProduct() {
+		return "addProduct";
+	}
+
+	@RequestMapping(value = "/applyDiscount")
+	public String applyDiscount() {
+		return "applyDiscount";
+	}
+
+	@RequestMapping(value = "/discount", method = RequestMethod.POST)
+	public String applyDiscount(HttpServletRequest request) {
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("Applying Discount on all products");
+		}
+		Float discountPercentage = Float.parseFloat(request
+				.getParameter("Discount"));
+		List<Product> products = productService.getAllProducts();
+		for (Product product : products) {
+			if (product.getPrice() > 0) {
+				product.setPrice(((100 - discountPercentage) * product
+						.getPrice()) / 100);
+				productService.saveProduct(product);
+			}
+		}
+		if (logger.isDebugEnabled()) {
+			logger.debug("Applied Discount on all products with a percentage :"+discountPercentage);
+		}
+		return "redirect:/";
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public String addProduct(HttpServletRequest request) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Adding new product");
+		}
+		String productname = request.getParameter("Product_Name");
+		Float price = Float.parseFloat(request.getParameter("price"));
+		Product product = new Product();
+		product.setName(productname);
+		product.setPrice(price);
+		productService.createProduct(product);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Added New product to repository with Product ID :"
+					+ product.getPID());
+		}
+		return "redirect:/";
+	}
 }
