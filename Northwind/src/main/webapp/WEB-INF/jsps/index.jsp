@@ -6,37 +6,58 @@
 <style type="text/css">
 body {
 	font-family: sans-serif;
+	background: #E0E0E0;
 }
 
-.data,.data td {
+table.hovertable {
+	font-family: verdana, arial, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	border-width: 1px;
+	border-color: #999999;
 	border-collapse: collapse;
-	width: 200%;
-	border: 1px solid #aaa;
-	margin: 2px;
-	padding: 2px;
-	background-color: #5C82FF;
 }
 
-.data th {
-	font-weight: bold;
-	background-color: #5C82FF;
-	color: #5C82FF;
+table.hovertable th {
+	background-color: 25A0C5;
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
 }
 
-.data tr {
-	background-color: "lightsalmon"
+table.hovertable tr {
+	background-color: A6DEEE;
+}
+
+table.hovertable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+
+h2 {
+	font: bold 1.5em "Times New Roman", Times, serif;
+	color: 3923D6;
+}
+
+table.options {
+	font-family: verdana, arial, sans-serif;
+	font-size: 11px;
+	color: black;
+	border-width: 1px;
+	border-color: ACF3FD;
+	border-collapse: collapse;
 }
 </style>
 </head>
 <body>
-
 	<Center>
-		<h1>
-			<b>List Of Products</b>
-		</h1>
 
 		<c:if test="${!empty products}">
-			<table>
+			<table class="hovertable">
+			<heading><h2><b>List Of Products</b></h2></heading>
 				<tr>
 					<th>Product ID</th>
 					<th>Product Name</th>
@@ -45,7 +66,8 @@ body {
 					<th>Delete</th>
 				</tr>
 				<c:forEach items="${products}" var="product">
-					<tr>
+					<tr onmouseover="this.style.backgroundColor='#ffff66';"
+						onmouseout="this.style.backgroundColor='#d4e3e5';">
 						<td>${product.PID}</td>
 						<td>${product.name}</td>
 						<td>${product.price}</td>
@@ -56,21 +78,24 @@ body {
 			</table>
 		</c:if>
 
-		<B><h4>More Options</h4></B>
-		<ul>
-			<table>
+
+<br><br><br>
+			<table class="options">
 				<tr>
-					<th>
-						<li><a href="addProduct">Add Product</a></li>
-					</th>
-					</tr>
-					<tr>
-					<th>
-						<li><a href="applyDiscount">Apply Discount</a></li>
-					</th>
+					<th><B>More Options</B></th>
+				</tr>
+				<tr>
+					<td>
+						<a href="addProduct">Add Product</a></li>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="applyDiscount">Apply Discount</a></li>
+					</td>
 				</tr>
 			</table>
-		</ul>
+
 	</Center>
 </body>
 </html>

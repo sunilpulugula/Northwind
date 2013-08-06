@@ -4,6 +4,7 @@
 <style type="text/css">
 body {
 	font-family: sans-serif;
+	background: #E0E0E0;
 }
 
 .data,.data td {
@@ -24,14 +25,25 @@ body {
 .data tr {
 	background-color: "lightsalmon"
 }
+
+form {
+	display: block;
+	background-color: A6DEEE;
+	padding: 20px;
+	width: 540px; /*200 + 300 + (20 * 2)*/
+}
+
+h2 {
+	font: bold 1.5em "Times New Roman", Times, serif;
+	color: 3923D6;
+}
 </style>
 </head>
 <body>
 	<Center>
-		<h1>
+		<h2>
 			<b>Provide New Product Details</b>
-		</h1>
-		<br> <br>
+		</h2>
 		<form method="post" action="add" name="createForm" onsubmit="">
 			<table>
 				<tr>
@@ -43,13 +55,7 @@ body {
 					<td><input type="text" name="price" id="price" /></td>
 				</tr>
 				<tr>
-				</tr>
-				<tr></tr>
-				<tr></tr>
-				<tr></tr>
-				<tr>
-					<td colspan="2">             
-					<input type="submit" value="Add" />
+					<td colspan="2">             <input type="submit" value="Add" />
 					</td>
 				</tr>
 			</table>
