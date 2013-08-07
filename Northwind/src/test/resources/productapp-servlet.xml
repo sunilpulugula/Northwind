@@ -25,14 +25,11 @@
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-		p:location="/WEB-INF/jdbc.properties" />
+		p:location="/jdbc.properties" />
 		
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
 		p:url="${jdbc.databaseurl}" p:username="${jdbc.username}" p:password="${jdbc.password}" />
-
-	<bean id="productDao" class="com.imaginea.productapp.dao.ProductDAOImpl" />
-	<bean id="productService" class="com.imaginea.productapp.services.ProductServiceImpl" />
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
@@ -54,10 +51,13 @@
 		</property>
 	</bean>
 
-	<tx:annotation-driven />
+	<bean id="productDao" class="com.imaginea.productapp.dao.ProductDAOImpl" />
+	<bean id="productService" class="com.imaginea.productapp.services.ProductServiceImpl" />
+
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	<tx:annotation-driven />
 
 </beans>
