@@ -20,7 +20,7 @@ public class ProductAppController {
 
 	@Autowired
 	ProductService productService;
-	
+
 	private String message = null;
 
 	private static final Logger logger = Logger
@@ -33,8 +33,7 @@ public class ProductAppController {
 		}
 		List<Product> products = productService.getAllProducts();
 		model.addAttribute("products", products);
-		if(getMessage() != null)
-		{
+		if (getMessage() != null) {
 			model.addAttribute("message", getMessage());
 			setMessage(null);
 		}
@@ -44,23 +43,23 @@ public class ProductAppController {
 		return "index";
 	}
 
-	@RequestMapping("/delete/{PID}")
-	public String deleteProduct(@PathVariable("PID") Integer PID) {
+	@RequestMapping("/delete/{productID}")
+	public String deleteProduct(@PathVariable("productID") Integer productID) {
 
 		if (logger.isDebugEnabled()) {
-			logger.debug("Deleting product with product ID : " + PID);
+			logger.debug("Deleting product with product ID : " + productID);
 		}
-		productService.deleteProduct(productService.getProductByID(PID));
+		productService.deleteProduct(productService.getProductByID(productID));
 		if (logger.isDebugEnabled()) {
-			logger.debug("Deletion done sucessfull with product ID : " + PID);
+			logger.debug("Deletion done sucessfull with product ID : " + productID);
 		}
-		setMessage("Product with Product ID "+PID+" is deleted.");
+		setMessage("Product with Product ID " + productID + " is deleted.");
 		return "redirect:/";
 	}
 
-	@RequestMapping("/edit/{PID}")
-	public String editProduct(@PathVariable("PID") Integer PID, ModelMap model) {
-		Product product = productService.getProductByID(PID);
+	@RequestMapping("/edit/{productID}")
+	public String editProduct(@PathVariable("productID") Integer productID, ModelMap model) {
+		Product product = productService.getProductByID(productID);
 		model.addAttribute("product", product);
 		return "update";
 	}
@@ -68,22 +67,29 @@ public class ProductAppController {
 	@RequestMapping(value = "/edit/update", method = RequestMethod.POST)
 	public String updateProduct(HttpServletRequest request) {
 
-		Integer pid = Integer.parseInt(request.getParameter("Product_ID"));
-		String productname = request.getParameter("Product_Name");
-		Float price = Float.parseFloat(request.getParameter("price"));
+		Integer productID = Integer.parseInt(request.getParameter("productID"));
+		String productname = request.getParameter("productName");
+		Float unitPrice = Float.parseFloat(request.getParameter("price"));
+		Integer qunatityPerUnit = Integer.parseInt(request.getParameter("qunatityPerUnit"));
+		Integer unitsInStock = Integer.parseInt(request.getParameter("unitsInStock"));
+		Integer unitsOnOrder = Integer.parseInt(request.getParameter("unitsOnOrder"));
 		if (logger.isDebugEnabled()) {
 			logger.debug("Updating detail of the product with product ID : "
-					+ pid);
+					+ productID);
 		}
 		Product product = new Product();
-		product.setPID(pid);
+		product.setProductID(productID);
 		product.setName(productname);
-		product.setPrice(price);
+		product.setPrice(unitPrice);
+		product.setQunatityPerUnit(qunatityPerUnit);
+		product.setUnitsInStock(unitsInStock);
+		product.setUnitsOnOrder(unitsOnOrder);
 		productService.saveProduct(product);
-		setMessage("Product with Product ID "+product.getPID()+" is updated.");
+		setMessage("Product with Product ID " + product.getProductID()
+				+ " is updated.");
 		if (logger.isDebugEnabled()) {
 			logger.debug("Updated detail of the product with product ID : "
-					+ pid);
+					+ productID);
 		}
 		return "redirect:/";
 	}
@@ -105,7 +111,7 @@ public class ProductAppController {
 			logger.debug("Applying Discount on all products");
 		}
 		Float discountPercentage = Float.parseFloat(request
-				.getParameter("Discount"));
+				.getParameter("discount"));
 		List<Product> products = productService.getAllProducts();
 		for (Product product : products) {
 			if (product.getPrice() > 0) {
@@ -115,9 +121,11 @@ public class ProductAppController {
 			}
 		}
 		if (logger.isDebugEnabled()) {
-			logger.debug("Applied Discount on all products with a percentage :"+discountPercentage);
+			logger.debug("Applied Discount on all products with a percentage :"
+					+ discountPercentage);
 		}
-		setMessage("Discount of "+discountPercentage+"% is applied on all Products ");
+		setMessage("Discount of " + discountPercentage
+				+ "% is applied on all Products ");
 		return "redirect:/";
 	}
 
@@ -126,27 +134,32 @@ public class ProductAppController {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Adding new product");
 		}
-		String productname = request.getParameter("Product_Name");
-		Float price = Float.parseFloat(request.getParameter("price"));
+		String productname = request.getParameter("productName");
+		Float unitPrice = Float.parseFloat(request.getParameter("price"));
+		Integer qunatityPerUnit = Integer.parseInt(request.getParameter("qunatityPerUnit"));
+		Integer unitsInStock = Integer.parseInt(request.getParameter("unitsInStock"));
+		Integer unitsOnOrder = Integer.parseInt(request.getParameter("unitsOnOrder"));
 		Product product = new Product();
 		product.setName(productname);
-		product.setPrice(price);
+		product.setPrice(unitPrice);
+		product.setQunatityPerUnit(qunatityPerUnit);
+		product.setUnitsInStock(unitsInStock);
+		product.setUnitsOnOrder(unitsOnOrder);
 		productService.createProduct(product);
-		setMessage("Product with Product ID "+product.getPID()+" is created.");
+		setMessage("Product with Product ID " + product.getProductID()
+				+ " is created.");
 		if (logger.isDebugEnabled()) {
 			logger.debug("Added New product to repository with Product ID :"
-					+ product.getPID());
+					+ product.getProductID());
 		}
 		return "redirect:/";
 	}
-	
-	private void setMessage(String message)
-	{
+
+	private void setMessage(String message) {
 		this.message = message;
 	}
-	
-	private String getMessage()
-	{
+
+	private String getMessage() {
 		return message;
 	}
 }

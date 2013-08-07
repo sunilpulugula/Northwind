@@ -30,8 +30,8 @@ public class ProductDAOImpl implements ProductDAO {
 	@Transactional
 	public List<Product> getProductsByRange(Product startRange,
 			Product endingRange) {
-		List<Product> list = sessionFactory.getCurrentSession().createQuery("from Product where PID >= "+ "'" + startRange.getPID() + "'" + " AND PID <= " + "'"
-								+ endingRange.getPID() + "'").list();
+		List<Product> list = sessionFactory.getCurrentSession().createQuery("from Product where PID >= "+ "'" + startRange.getProductID() + "'" + " AND PID <= " + "'"
+								+ endingRange.getProductID() + "'").list();
 		return list;
 	}
 

@@ -23,21 +23,29 @@ public class ProductServicesTest {
 
 	@Test
 	public void TestForCreateProduct() {
-		Product newProduct = createNewProduct("TV", 399.99f);
+		Product newProduct = createNewProduct("TV", 399.99f, 3, 12, 4);
 		Integer productID = productService.createProduct(newProduct);
 		Product existingProduct = productService.getProductByID(productID);
 		Assert.assertEquals("Product not exist with the ID" + productID,
-				productID, existingProduct.getPID());
+				productID, existingProduct.getProductID());
 		Assert.assertEquals("Product name is not equal", newProduct.getName(),
 				existingProduct.getName());
 		Assert.assertEquals("Product price is not equal",
-				(Object)newProduct.getPrice(), (Object)existingProduct.getPrice());
+				(Object) newProduct.getPrice(),
+				(Object) existingProduct.getPrice());
+		Assert.assertEquals("QunatityPerUnit is not equal",
+				newProduct.getQunatityPerUnit(),
+				existingProduct.getQunatityPerUnit());
+		Assert.assertEquals("UnitsInStock is not equal",
+				newProduct.getUnitsInStock(), existingProduct.getUnitsInStock());
+		Assert.assertEquals("UnitsOnOrder is not equal",
+				newProduct.getUnitsOnOrder(), existingProduct.getUnitsOnOrder());
 	}
 
 	@Test
 	public void TestForGetAllProducts() {
 		Integer preCount = productService.getAllProducts().size();
-		productService.createProduct(createNewProduct("TV", 399.99f));
+		productService.createProduct(createNewProduct("TV", 399.99f, 3, 12, 4));
 		Integer postCount = productService.getAllProducts().size();
 		Assert.assertEquals("Count of product is not correct", preCount,
 				preCount);
@@ -45,7 +53,7 @@ public class ProductServicesTest {
 
 	@Test
 	public void TestForUpdateProduct() {
-		Product newProduct = createNewProduct("TV", 399.99f);
+		Product newProduct = createNewProduct("TV", 399.99f, 3, 12, 4);
 		Integer productID = productService.createProduct(newProduct);
 		Product existingProduct = productService.getProductByID(productID);
 		existingProduct.setName("Washing Machine");
@@ -54,11 +62,19 @@ public class ProductServicesTest {
 
 		Product updatedProduct = productService.getProductByID(productID);
 		Assert.assertEquals("Product not exist with the ID" + productID,
-				productID, updatedProduct.getPID());
+				productID, updatedProduct.getProductID());
 		Assert.assertEquals("Product name is not equal",
 				existingProduct.getName(), updatedProduct.getName());
 		Assert.assertEquals("Product price is not equal",
-				(Object)existingProduct.getPrice(), (Object)updatedProduct.getPrice());
+				(Object) existingProduct.getPrice(),
+				(Object) updatedProduct.getPrice());
+		Assert.assertEquals("QunatityPerUnit is not equal",
+				newProduct.getQunatityPerUnit(),
+				existingProduct.getQunatityPerUnit());
+		Assert.assertEquals("UnitsInStock is not equal",
+				newProduct.getUnitsInStock(), existingProduct.getUnitsInStock());
+		Assert.assertEquals("UnitsOnOrder is not equal",
+				newProduct.getUnitsOnOrder(), existingProduct.getUnitsOnOrder());
 	}
 
 	@Test
@@ -68,17 +84,17 @@ public class ProductServicesTest {
 			Product product = products.get(0);
 			productService.deleteProduct(product);
 			Product emptyProduct = productService.getProductByID(product
-					.getPID());
+					.getProductID());
 			Assert.assertEquals("Product is not deleted with product ID"
-					+ product.getPID(), null, emptyProduct);
+					+ product.getProductID(), null, emptyProduct);
 		}
 	}
 
 	@Test
 	public void TestForGetProductsByRange() {
 		List<Product> products = productService.getAllProducts();
-		Integer startIndex = products.get(0).getPID();
-		Integer endingIndex = products.get(products.size() - 1).getPID();
+		Integer startIndex = products.get(0).getProductID();
+		Integer endingIndex = products.get(products.size() - 1).getProductID();
 		if (endingIndex > startIndex) {
 			List<Product> rangeProducts = productService.getProductsByRange(
 					products.get(1), products.get(products.size() - 1));
@@ -92,10 +108,14 @@ public class ProductServicesTest {
 		}
 	}
 
-	private Product createNewProduct(String name, float price) {
+	private Product createNewProduct(String name, float price,
+			int qunatityPerUnit, int unitsInStock, int unitsOnOrder) {
 		Product newProduct = new Product();
 		newProduct.setName(name);
 		newProduct.setPrice(price);
+		newProduct.setQunatityPerUnit(qunatityPerUnit);
+		newProduct.setUnitsInStock(unitsInStock);
+		newProduct.setUnitsOnOrder(unitsOnOrder);
 		return newProduct;
 	}
 }

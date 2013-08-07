@@ -4,29 +4,57 @@
 <%@ page isELIgnored="false"%>
 <title>Spring Product Application - Northwind</title>
 <script type="text/javascript">
-function validateForm(name){
-	var productID = document.forms[name]["Product_ID"].value;
-	var productName = document.forms[name]["Product_Name"].value;
-	var price = document.forms[name]["price"].value;
-	if(productName == "" || productName == null){
-		alert("Product name should not be empty!!!");
-		return false;
-	}
-	if(price == "" || price == null){
-		alert("Product price should not be empty!!!");
-		return false;
-	}
-	if(!validatePrice(price))
-	{
-		alert("Price of the product is not a valid Integer!!!");
-		return false;
-	}
-	return confirm('Are you sure, you want to update product with ID : '+productID+' ?');
-}
+	function validateForm(name) {
+		var productID = document.forms[name]["productID"].value;
+		var productName = document.forms[name]["productName"].value;
+		var price = document.forms[name]["price"].value;
+		var qunatityPerUnit = document.forms[name]["qunatityPerUnit"].value;
+		var unitsInStock = document.forms[name]["unitsInStock"].value;
+		var unitsOnOrder = document.forms[name]["unitsOnOrder"].value;
+		if (productName == "" || productName == null) {
+			alert("Product name should not be empty!!!");
+			return false;
+		}
+		if (price == "" || price == null) {
+			alert("Product price should not be empty!!!");
+			return false;
+		}
+		if (qunatityPerUnit == "" || qunatityPerUnit == null) {
+			alert("Qunatity Per Unit should not be empty!!!");
+			return false;
+		}
+		if (unitsInStock == "" || unitsInStock == null) {
+			alert("Units In Stock should not be empty!!!");
+			return false;
+		}
+		if (unitsOnOrder == "" || unitsOnOrder == null) {
+			alert("Units On Order should not be empty!!!");
+			return false;
+		}
+		if (validateNumber(price, "price")
+				&& validateNumber(qunatityPerUnit, "QunatityPerUnit")
+				&& validateNumber(unitsInStock, "UnitsInStock")
+				&& validateNumber(unitsOnOrder, "UnitsOnOrder")) {
+			return true;
+		} else {
+			return false;
+		}
 
-function validatePrice(price) {
-	 return !isNaN(parseInt(price * 1));
-}
+		return confirm('Are you sure, you want to update product with ID : '
+				+ productID + ' ?');
+	}
+
+	function validateNumber(value, name) {
+		if (isNaN(parseInt(value * 1))) {
+			alert(name + " is not a valid Integer!!!");
+			return false;
+		}
+		if (value < 0) {
+			alert(name + " can not be negative!!!");
+			return false;
+		}
+		return true;
+	}
 </script>
 <style type="text/css">
 body {
@@ -72,27 +100,41 @@ h2 {
 			<b>Product Details</b>
 		</h2>
 		<c:if test="${!empty product}">
-			<form method="post" action="update" name="updateForm" onsubmit="return validateForm('updateForm')">
+			<form method="post" action="update" name="updateForm"
+				onsubmit="return validateForm('updateForm')">
 				<table>
 					<tr>
 						<td>Product ID</td>
-						<td><input type="text" name="Product_ID" id="Product_ID"
-							value="${product.PID}" readonly /></td>
+						<td><input type="text" name="productID" id="productID"
+							value="${product.productID}" readonly /></td>
 					</tr>
 					<tr>
 						<td>Product Name</td>
-						<td><input type="text" name="Product_Name" id="Product_Name"
+						<td><input type="text" name="productName" id="productName"
 							value="${product.name}" /></td>
 					</tr>
 					<tr>
-						<td>Price</td>
+						<td>Unit Price</td>
 						<td><input type="text" name="price" id="price"
 							value="${product.price}" /></td>
 					</tr>
 					<tr>
-						<td colspan="2">             <input type="submit"
-							value="Update" />         
-						</td>
+						<td>QunatityPerUnit</td>
+						<td><input type="text" name="qunatityPerUnit"
+							id="qunatityPerUnit" value="${product.qunatityPerUnit}" /></td>
+					</tr>
+					<tr>
+						<td>UnitsInStock</td>
+						<td><input type="text" name="unitsInStock" id="unitsInStock"
+							value="${product.unitsInStock}" /></td>
+					</tr>
+					<tr>
+						<td>UnitsOnOrder</td>
+						<td><input type="text" name="unitsOnOrder" id="unitsOnOrder"
+							value="${product.unitsOnOrder}" /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="Update" /></td>
 					</tr>
 				</table>
 			</form>

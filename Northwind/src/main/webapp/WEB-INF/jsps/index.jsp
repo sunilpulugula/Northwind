@@ -67,18 +67,24 @@ h6 {
 				<tr>
 					<th>Product ID</th>
 					<th>Product Name</th>
-					<th>Price</th>
+					<th>UnitPrice</th>
+					<th>QunatityPerUnit</th>
+					<th>UnitsInStock</th>
+					<th>UnitsOnOrder</th>
 					<th>Edit</th>
 					<th>Delete</th>
 				</tr>
 				<c:forEach items="${products}" var="product">
 					<tr onmouseover="this.style.backgroundColor='#ffff66';"
 						onmouseout="this.style.backgroundColor='#d4e3e5';">
-						<td>${product.PID}</td>
+						<td>${product.productID}</td>
 						<td>${product.name}</td>
 						<td>${product.price}</td>
-						<td><a href="edit/${product.PID}">edit</a></td>
-						<td><a href="delete/${product.PID}" onclick="return confirm('Are you sure, you want to delete product with ID : '+${product.PID}+' ?')">delete</a></td>
+						<td>${product.qunatityPerUnit}</td>
+						<td>${product.unitsInStock}</td>
+						<td>${product.unitsOnOrder}</td>
+						<td><a href="edit/${product.productID}">edit</a></td>
+						<td><a href="delete/${product.productID}" onclick="return confirm('Are you sure, you want to delete product with ID : '+${product.productID}+' ?')">delete</a></td>
 					</tr>
 				</c:forEach>
 			</table>

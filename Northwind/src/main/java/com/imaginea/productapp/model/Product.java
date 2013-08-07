@@ -13,35 +13,68 @@ public class Product {
 	@Id
 	@Column(name = "PID")
 	@GeneratedValue
-	private Integer PID;
+	private Integer productID;
 
 	@Column(name = "Name")
-	private String Name;
+	private String name;
 
-	@Column(name = "Price")
-	private float Price;
-
-	public Integer getPID() {
-		return PID;
+	@Column(name = "UnitPrice")
+	private float price;
+	
+	@Column(name = "QunatityPerUnit")
+	private int qunatityPerUnit;
+	
+	@Column(name = "UnitsInStock")
+	private int unitsInStock;
+	
+	@Column(name = "UnitsOnOrder")
+	private int unitsOnOrder;
+	
+	public int getQunatityPerUnit() {
+		return qunatityPerUnit;
 	}
 
-	public void setPID(Integer pID) {
-		PID = pID;
+	public void setQunatityPerUnit(int qunatityPerUnit) {
+		this.qunatityPerUnit = qunatityPerUnit;
+	}
+
+	public int getUnitsInStock() {
+		return unitsInStock;
+	}
+
+	public void setUnitsInStock(int unitsInStock) {
+		this.unitsInStock = unitsInStock;
+	}
+
+	public int getUnitsOnOrder() {
+		return unitsOnOrder;
+	}
+
+	public void setUnitsOnOrder(int unitsOnOrder) {
+		this.unitsOnOrder = unitsOnOrder;
+	}
+
+	public Integer getProductID() {
+		return productID;
+	}
+
+	public void setProductID(Integer productID) {
+		this.productID = productID;
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
 	public float getPrice() {
-		return Price;
+		return price;
 	}
 
 	public void setPrice(float price) {
-		Price = price;
+		this.price = price;
 	}
 }

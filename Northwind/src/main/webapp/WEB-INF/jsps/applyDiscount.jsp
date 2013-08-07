@@ -3,7 +3,7 @@
 <title>Spring Product Application - Northwind</title>
 <script type="text/javascript">
 function validateForm(name){
-	var discount = document.forms[name]["Discount"].value;
+	var discount = document.forms[name]["discount"].value;
 	if(discount == "" || discount == null){
 		alert("Discount should not be empty!!!");
 		return false;
@@ -11,6 +11,11 @@ function validateForm(name){
 	if(!validatePrice(discount))
 	{
 		alert("Discount is not a valid Integer!!!");
+		return false;
+	}
+	if(discount < 0)
+	{
+		alert("Discount can not be negative Integer!!!");
 		return false;
 	}
 	return confirm('Are you sure, you want to apply '+discount+'% discount on all products ?')
@@ -67,7 +72,7 @@ h2 {
 			<table>
 				<tr>
 					<td>Discount Percentage</td>
-					<td><input type="text" name="Discount" id="Discount" value"0.0"/></td>
+					<td><input type="text" name="discount" id="discount" value"0.0"/></td>
 				</tr>
 				<tr>
 					<td colspan="2">             <input type="submit"
