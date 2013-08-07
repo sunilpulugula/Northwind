@@ -52,6 +52,10 @@ table.options {
 	border-color: ACF3FD;
 	border-collapse: collapse;
 }
+h6 {
+	font: bold 1.5em "Times New Roman", Times, serif;
+	color: RED;
+}
 </style>
 </head>
 <body>
@@ -59,7 +63,7 @@ table.options {
 
 		<c:if test="${!empty products}">
 			<table class="hovertable">
-			<heading><h2><b>List Of Products</b></h2></heading>
+			<h2><b>List Of Products</b></h2>
 				<tr>
 					<th>Product ID</th>
 					<th>Product Name</th>
@@ -97,6 +101,11 @@ table.options {
 					</td>
 				</tr>
 			</table>
+<br></br>
+<br></br>
+    <c:if test="${!empty message}">
+		<h6>Last Update: ${message}</h6>
+	</c:if>
 
 	</Center>
 </body>

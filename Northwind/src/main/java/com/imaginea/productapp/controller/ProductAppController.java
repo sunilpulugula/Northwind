@@ -20,6 +20,8 @@ public class ProductAppController {
 
 	@Autowired
 	ProductService productService;
+	
+	private String message = null;
 
 	private static final Logger logger = Logger
 			.getLogger(ProductAppController.class);
@@ -31,6 +33,11 @@ public class ProductAppController {
 		}
 		List<Product> products = productService.getAllProducts();
 		model.addAttribute("products", products);
+		if(getMessage() != null)
+		{
+			model.addAttribute("message", getMessage());
+			setMessage(null);
+		}
 		if (logger.isDebugEnabled()) {
 			logger.debug("Ending execution of method index in Product_App_Controller");
 		}
@@ -47,6 +54,7 @@ public class ProductAppController {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Deletion done sucessfull with product ID : " + PID);
 		}
+		setMessage("Product with Product ID "+PID+" is deleted.");
 		return "redirect:/";
 	}
 
@@ -71,8 +79,8 @@ public class ProductAppController {
 		product.setPID(pid);
 		product.setName(productname);
 		product.setPrice(price);
-
 		productService.saveProduct(product);
+		setMessage("Product with Product ID "+product.getPID()+" is updated.");
 		if (logger.isDebugEnabled()) {
 			logger.debug("Updated detail of the product with product ID : "
 					+ pid);
@@ -109,6 +117,7 @@ public class ProductAppController {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Applied Discount on all products with a percentage :"+discountPercentage);
 		}
+		setMessage("Discount of "+discountPercentage+"% is applied on all Products ");
 		return "redirect:/";
 	}
 
@@ -123,10 +132,21 @@ public class ProductAppController {
 		product.setName(productname);
 		product.setPrice(price);
 		productService.createProduct(product);
+		setMessage("Product with Product ID "+product.getPID()+" is created.");
 		if (logger.isDebugEnabled()) {
 			logger.debug("Added New product to repository with Product ID :"
 					+ product.getPID());
 		}
 		return "redirect:/";
+	}
+	
+	private void setMessage(String message)
+	{
+		this.message = message;
+	}
+	
+	private String getMessage()
+	{
+		return message;
 	}
 }
