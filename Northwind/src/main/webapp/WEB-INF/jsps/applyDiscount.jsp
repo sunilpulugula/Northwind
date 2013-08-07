@@ -1,6 +1,25 @@
 <html>
 <head>
 <title>Spring Product Application - Northwind</title>
+<script type="text/javascript">
+function validateForm(name){
+	var discount = document.forms[name]["Discount"].value;
+	if(discount == "" || discount == null){
+		alert("Discount should not be empty!!!");
+		return false;
+	}
+	if(!validatePrice(discount))
+	{
+		alert("Discount is not a valid Integer!!!");
+		return false;
+	}
+	return confirm('Are you sure, you want to apply '+discount+'% discount on all products ?')
+}
+
+function validatePrice(price) {
+	 return !isNaN(parseInt(price * 1));
+}
+</script>
 <style type="text/css">
 body {
 	font-family: sans-serif;
@@ -44,21 +63,20 @@ h2 {
 		<h2>
 			<b>Provide Discount percentage</b>
 		</h2>
-		<form method="post" action="discount" name="discountForm" onsubmit="">
+		<form method="post" action="discount" name="discountForm" onsubmit="return validateForm('discountForm')">
 			<table>
 				<tr>
 					<td>Discount Percentage</td>
-					<td><input type="text" name="Discount" id="Discount" /></td>
+					<td><input type="text" name="Discount" id="Discount" value"0.0"/></td>
 				</tr>
 				<tr>
 					<td colspan="2">             <input type="submit"
-						value="Apply Discount" />
+						value="Apply Discount"/>
 					</td>
 				</tr>
 			</table>
 		</form>
-		<h5>Note:</h5>
-		<h6>This Discount will be applicable on all products in the
+		<h6>Note: This Discount will be applicable on all products in the
 			repository.</h6>
 	</Center>
 </body>

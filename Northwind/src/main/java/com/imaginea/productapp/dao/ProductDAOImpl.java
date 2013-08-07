@@ -2,6 +2,7 @@ package com.imaginea.productapp.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,8 @@ public class ProductDAOImpl implements ProductDAO {
 	@Transactional
 	public List<Product> getProductsByRange(Product startRange,
 			Product endingRange) {
-		List<Product> list = sessionFactory.getCurrentSession().createQuery("from product where PID between " + "'" + startRange.getPID() + "'" + " AND " +  "'" +  endingRange.getPID()  + "'" ).list();
+		List<Product> list = sessionFactory.getCurrentSession().createQuery("from Product where PID >= "+ "'" + startRange.getPID() + "'" + " AND PID <= " + "'"
+								+ endingRange.getPID() + "'").list();
 		return list;
 	}
 

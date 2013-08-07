@@ -3,6 +3,8 @@
 <head>
 <%@ page isELIgnored="false"%>
 <title>Spring Product Application - Northwind</title>
+<script type="text/javascript">
+</script>
 <style type="text/css">
 body {
 	font-family: sans-serif;
@@ -72,7 +74,7 @@ table.options {
 						<td>${product.name}</td>
 						<td>${product.price}</td>
 						<td><a href="edit/${product.PID}">edit</a></td>
-						<td><a href="delete/${product.PID}">delete</a></td>
+						<td><a href="delete/${product.PID}" onclick="return confirm('Are you sure, you want to delete product with ID : '+${product.PID}+' ?')">delete</a></td>
 					</tr>
 				</c:forEach>
 			</table>

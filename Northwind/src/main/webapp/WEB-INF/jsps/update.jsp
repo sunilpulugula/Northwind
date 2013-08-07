@@ -3,6 +3,31 @@
 <head>
 <%@ page isELIgnored="false"%>
 <title>Spring Product Application - Northwind</title>
+<script type="text/javascript">
+function validateForm(name){
+	var productID = document.forms[name]["Product_ID"].value;
+	var productName = document.forms[name]["Product_Name"].value;
+	var price = document.forms[name]["price"].value;
+	if(productName == "" || productName == null){
+		alert("Product name should not be empty!!!");
+		return false;
+	}
+	if(price == "" || price == null){
+		alert("Product price should not be empty!!!");
+		return false;
+	}
+	if(!validatePrice(price))
+	{
+		alert("Price of the product is not a valid Integer!!!");
+		return false;
+	}
+	return confirm('Are you sure, you want to update product with ID : '+productID+' ?');
+}
+
+function validatePrice(price) {
+	 return !isNaN(parseInt(price * 1));
+}
+</script>
 <style type="text/css">
 body {
 	font-family: sans-serif;
@@ -47,7 +72,7 @@ h2 {
 			<b>Product Details</b>
 		</h2>
 		<c:if test="${!empty product}">
-			<form method="post" action="update" name="updateForm" onsubmit="">
+			<form method="post" action="update" name="updateForm" onsubmit="return validateForm('updateForm')">
 				<table>
 					<tr>
 						<td>Product ID</td>

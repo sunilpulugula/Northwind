@@ -16,7 +16,6 @@ import com.imaginea.productapp.model.Product;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:productapp-servlet.xml")
 @Transactional
-@Ignore
 public class ProductDAOTest {
 
 	@Autowired
@@ -31,8 +30,7 @@ public class ProductDAOTest {
 				productID, existingProduct.getPID());
 		Assert.assertEquals("Product name is not equal", newProduct.getName(),
 				existingProduct.getName());
-		Assert.assertEquals("Product price is not equal",
-				newProduct.getPrice(), existingProduct.getPrice());
+		Assert.assertEquals("Product price is not equal",(Object)newProduct.getPrice(), (Object)existingProduct.getPrice());
 	}
 
 	@Test
@@ -90,7 +88,7 @@ public class ProductDAOTest {
 		Assert.assertEquals("Product name is not equal",
 				existingProduct.getName(), updatedProduct.getName());
 		Assert.assertEquals("Product price is not equal",
-				existingProduct.getPrice(), updatedProduct.getPrice());
+				(Object)existingProduct.getPrice(), (Object)updatedProduct.getPrice());
 	}
 
 	private Product createNewProduct(String name, float price) {
