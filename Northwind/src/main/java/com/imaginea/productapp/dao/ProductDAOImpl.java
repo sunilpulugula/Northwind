@@ -9,11 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.imaginea.productapp.model.Product;
 
-public class ProductDAOImpl implements ProductDAO {
+public class ProductDAOImpl implements ProductDAO
+{
 
 	@Autowired
-	private SessionFactory sessionFactory;
-	
+	private SessionFactory	sessionFactory;
+
 	@Override
 	@Transactional
 	public List<Product> getAllProducts() {
@@ -28,10 +29,17 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Override
 	@Transactional
-	public List<Product> getProductsByRange(Product startRange,
-			Product endingRange) {
-		List<Product> list = sessionFactory.getCurrentSession().createQuery("from Product where PID >= "+ "'" + startRange.getProductID() + "'" + " AND PID <= " + "'"
-								+ endingRange.getProductID() + "'").list();
+	public List<Product> getProductsByRange(Product startRange, Product endingRange) {
+		List<Product> list = sessionFactory.getCurrentSession()
+																				.createQuery("from Product where PID >= "
+																											+ "'"
+																											+ startRange.getProductID()
+																											+ "'"
+																											+ " AND PID <= "
+																											+ "'"
+																											+ endingRange.getProductID()
+																											+ "'")
+																				.list();
 		return list;
 	}
 
@@ -39,8 +47,8 @@ public class ProductDAOImpl implements ProductDAO {
 	@Transactional
 	public boolean saveProduct(Product product) {
 		if (product != null) {
-		sessionFactory.getCurrentSession().update(product);
-		return true;
+			sessionFactory.getCurrentSession().update(product);
+			return true;
 		}
 		return false;
 	}
@@ -58,7 +66,7 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	@Transactional
 	public Integer createProduct(Product product) {
-		return (Integer)sessionFactory.getCurrentSession().save(product);
+		return (Integer) sessionFactory.getCurrentSession().save(product);
 	}
 
 }

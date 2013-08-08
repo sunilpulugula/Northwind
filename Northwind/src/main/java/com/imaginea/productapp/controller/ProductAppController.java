@@ -17,15 +17,15 @@ import com.imaginea.productapp.model.Product;
 import com.imaginea.productapp.services.ProductService;
 
 @Controller
-public class ProductAppController {
+public class ProductAppController
+{
 
 	@Autowired
-	ProductService productService;
+	ProductService							productService;
 
-	private String message = null;
+	private String							message	= null;
 
-	private static final Logger logger = Logger
-			.getLogger(ProductAppController.class);
+	private static final Logger	logger	= Logger.getLogger(ProductAppController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String retriveAllProducts(ModelMap model) {
@@ -75,8 +75,7 @@ public class ProductAppController {
 		Integer unitsInStock = Integer.parseInt(request.getParameter("unitsInStock"));
 		Integer unitsOnOrder = Integer.parseInt(request.getParameter("unitsOnOrder"));
 		if (logger.isDebugEnabled()) {
-			logger.debug("Updating detail of the product with product ID : "
-					+ productID);
+			logger.debug("Updating detail of the product with product ID : " + productID);
 		}
 		Product product = new Product();
 		product.setProductID(productID);
@@ -86,11 +85,9 @@ public class ProductAppController {
 		product.setUnitsInStock(unitsInStock);
 		product.setUnitsOnOrder(unitsOnOrder);
 		productService.saveProduct(product);
-		setMessage("Product with Product ID " + product.getProductID()
-				+ " is updated.");
+		setMessage("Product with Product ID " + product.getProductID() + " is updated.");
 		if (logger.isDebugEnabled()) {
-			logger.debug("Updated detail of the product with product ID : "
-					+ productID);
+			logger.debug("Updated detail of the product with product ID : " + productID);
 		}
 		return "redirect:/";
 	}
@@ -111,21 +108,18 @@ public class ProductAppController {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Applying Discount on all products");
 		}
-		BigDecimal discountPercentage = new BigDecimal(request
-				.getParameter("discount"));
+		BigDecimal discountPercentage = new BigDecimal(request.getParameter("discount"));
 		List<Product> products = productService.getAllProducts();
 		for (Product product : products) {
 			BigDecimal price = product.getPrice();
-				BigDecimal dicountPrice = price.subtract((discountPercentage.divide(new BigDecimal(100)).multiply(price)));
-				product.setPrice(dicountPrice);
-				productService.saveProduct(product);
+			BigDecimal dicountPrice = price.subtract((discountPercentage.divide(new BigDecimal(100)).multiply(price)));
+			product.setPrice(dicountPrice);
+			productService.saveProduct(product);
 		}
 		if (logger.isDebugEnabled()) {
-			logger.debug("Applied Discount on all products with a percentage :"
-					+ discountPercentage);
+			logger.debug("Applied Discount on all products with a percentage :" + discountPercentage);
 		}
-		setMessage("Discount of " + discountPercentage
-				+ "% is applied on all Products ");
+		setMessage("Discount of " + discountPercentage + "% is applied on all Products ");
 		return "redirect:/";
 	}
 
@@ -146,11 +140,9 @@ public class ProductAppController {
 		product.setUnitsInStock(unitsInStock);
 		product.setUnitsOnOrder(unitsOnOrder);
 		productService.createProduct(product);
-		setMessage("Product with Product ID " + product.getProductID()
-				+ " is created.");
+		setMessage("Product with Product ID " + product.getProductID() + " is created.");
 		if (logger.isDebugEnabled()) {
-			logger.debug("Added New product to repository with Product ID :"
-					+ product.getProductID());
+			logger.debug("Added New product to repository with Product ID :" + product.getProductID());
 		}
 		return "redirect:/";
 	}

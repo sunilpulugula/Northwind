@@ -2,28 +2,27 @@
 <head>
 <title>Spring Product Application - Northwind</title>
 <script type="text/javascript">
-function validateForm(name){
-	var discount = document.forms[name]["discount"].value;
-	if(discount == "" || discount == null){
-		alert("Discount should not be empty!!!");
-		return false;
+	function validateForm(name) {
+		var discount = document.forms[name]["discount"].value;
+		if (discount == "" || discount == null) {
+			alert("Discount should not be empty!!!");
+			return false;
+		}
+		if (!validatePrice(discount)) {
+			alert("Discount is not a valid Integer!!!");
+			return false;
+		}
+		if (discount < 0) {
+			alert("Discount can not be negative Integer!!!");
+			return false;
+		}
+		return confirm('Are you sure, you want to apply ' + discount
+				+ '% discount on all products ?')
 	}
-	if(!validatePrice(discount))
-	{
-		alert("Discount is not a valid Integer!!!");
-		return false;
-	}
-	if(discount < 0)
-	{
-		alert("Discount can not be negative Integer!!!");
-		return false;
-	}
-	return confirm('Are you sure, you want to apply '+discount+'% discount on all products ?')
-}
 
-function validatePrice(price) {
-	 return !isNaN(parseInt(price * 1));
-}
+	function validatePrice(price) {
+		return !isNaN(parseInt(price * 1));
+	}
 </script>
 <style type="text/css">
 body {
@@ -68,7 +67,8 @@ h2 {
 		<h2>
 			<b>Provide Discount percentage</b>
 		</h2>
-		<form method="post" action="discount" name="discountForm" onsubmit="return validateForm('discountForm')">
+		<form method="post" action="discount" name="discountForm"
+			onsubmit="return validateForm('discountForm')">
 			<table>
 				<tr>
 					<td>Discount Percentage</td>
@@ -76,7 +76,7 @@ h2 {
 				</tr>
 				<tr>
 					<td colspan="2">             <input type="submit"
-						value="Apply Discount"/>
+						value="Apply Discount" />
 					</td>
 				</tr>
 			</table>

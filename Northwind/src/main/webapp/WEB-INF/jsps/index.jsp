@@ -52,6 +52,7 @@ table.options {
 	border-color: ACF3FD;
 	border-collapse: collapse;
 }
+
 h6 {
 	font: bold 1.0em "Times New Roman", Times, serif;
 	color: RED;
@@ -63,7 +64,9 @@ h6 {
 
 		<c:if test="${!empty products}">
 			<table class="hovertable">
-			<h2><b>List Of Products</b></h2>
+				<h2>
+					<b>List Of Products</b>
+				</h2>
 				<tr>
 					<th>Product ID</th>
 					<th>Product Name</th>
@@ -84,34 +87,34 @@ h6 {
 						<td>${product.unitsInStock}</td>
 						<td>${product.unitsOnOrder}</td>
 						<td><a href="edit/${product.productID}">edit</a></td>
-						<td><a href="delete/${product.productID}" onclick="return confirm('Are you sure, you want to delete product with ID : '+${product.productID}+' ?')">delete</a></td>
+						<td><a href="delete/${product.productID}"
+							onclick="return confirm('Are you sure, you want to delete product with ID : '+${product.productID}+' ?')">delete</a></td>
 					</tr>
 				</c:forEach>
 			</table>
 		</c:if>
 
 
-<br><br><br>
-			<table class="options">
-				<tr>
-					<th><B>More Options</B></th>
-				</tr>
-				<tr>
-					<td>
-						<a href="addProduct">Add Product</a></li>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<a href="applyDiscount">Apply Discount</a></li>
-					</td>
-				</tr>
-			</table>
-<br></br>
-<br></br>
-    <c:if test="${!empty message}">
-		<h6>Recent Action : ${message}</h6>
-	</c:if>
+		<br>
+		<br>
+		<br>
+		<table class="options">
+			<tr>
+				<th><B>More Options</B></th>
+			</tr>
+			<tr>
+				<td><a href="addProduct">Add Product</a>
+				</li></td>
+			</tr>
+			<tr>
+				<td><a href="applyDiscount">Apply Discount</a>
+				</li></td>
+			</tr>
+		</table>
+		<br></br> <br></br>
+		<c:if test="${!empty message}">
+			<h6>Recent Action : ${message}</h6>
+		</c:if>
 
 	</Center>
 </body>

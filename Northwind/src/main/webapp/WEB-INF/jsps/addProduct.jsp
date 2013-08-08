@@ -2,54 +2,54 @@
 <head>
 <title>Spring Product Application - Northwind</title>
 <script type="text/javascript">
-function validateForm(name) {
-	var productName = document.forms[name]["productName"].value;
-	var price = document.forms[name]["price"].value;
-	var qunatityPerUnit = document.forms[name]["qunatityPerUnit"].value;
-	var unitsInStock = document.forms[name]["unitsInStock"].value;
-	var unitsOnOrder = document.forms[name]["unitsOnOrder"].value;
-	if (productName == "" || productName == null) {
-		alert("Product name should not be empty!!!");
-		return false;
-	}
-	if (price == "" || price == null) {
-		alert("Product price should not be empty!!!");
-		return false;
-	}
-	if (qunatityPerUnit == "" || qunatityPerUnit == null) {
-		alert("Qunatity Per Unit should not be empty!!!");
-		return false;
-	}
-	if (unitsInStock == "" || unitsInStock == null) {
-		alert("Units In Stock should not be empty!!!");
-		return false;
-	}
-	if (unitsOnOrder == "" || unitsOnOrder == null) {
-		alert("Units On Order should not be empty!!!");
-		return false;
-	}
-	if (!(validateNumber(price, "price")
-			&& validateNumber(qunatityPerUnit, "QunatityPerUnit")
-			&& validateNumber(unitsInStock, "UnitsInStock")
-			&& validateNumber(unitsOnOrder, "UnitsOnOrder"))) {
-		return false;
+	function validateForm(name) {
+		var productName = document.forms[name]["productName"].value;
+		var price = document.forms[name]["price"].value;
+		var qunatityPerUnit = document.forms[name]["qunatityPerUnit"].value;
+		var unitsInStock = document.forms[name]["unitsInStock"].value;
+		var unitsOnOrder = document.forms[name]["unitsOnOrder"].value;
+		if (productName == "" || productName == null) {
+			alert("Product name should not be empty!!!");
+			return false;
+		}
+		if (price == "" || price == null) {
+			alert("Product price should not be empty!!!");
+			return false;
+		}
+		if (qunatityPerUnit == "" || qunatityPerUnit == null) {
+			alert("Qunatity Per Unit should not be empty!!!");
+			return false;
+		}
+		if (unitsInStock == "" || unitsInStock == null) {
+			alert("Units In Stock should not be empty!!!");
+			return false;
+		}
+		if (unitsOnOrder == "" || unitsOnOrder == null) {
+			alert("Units On Order should not be empty!!!");
+			return false;
+		}
+		if (!(validateNumber(price, "price")
+				&& validateNumber(qunatityPerUnit, "QunatityPerUnit")
+				&& validateNumber(unitsInStock, "UnitsInStock") && validateNumber(
+				unitsOnOrder, "UnitsOnOrder"))) {
+			return false;
+		}
+
+		return confirm('Are you sure, you want to update product with ID : '
+				+ productID + ' ?');
 	}
 
-	return confirm('Are you sure, you want to update product with ID : '
-			+ productID + ' ?');
-}
-
-function validateNumber(value, name) {
-	if (isNaN(parseInt(value * 1))) {
-		alert(name + " is not a valid Integer!!!");
-		return false;
+	function validateNumber(value, name) {
+		if (isNaN(parseInt(value * 1))) {
+			alert(name + " is not a valid Integer!!!");
+			return false;
+		}
+		if (value < 0) {
+			alert(name + " can not be negative!!!");
+			return false;
+		}
+		return true;
 	}
-	if (value < 0) {
-		alert(name + " can not be negative!!!");
-		return false;
-	}
-	return true;
-}
 </script>
 <style type="text/css">
 body {

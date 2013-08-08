@@ -9,10 +9,11 @@ import com.imaginea.productapp.dao.ProductDAO;
 import com.imaginea.productapp.model.Product;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService
+{
 
 	@Autowired
-	private ProductDAO productDao;
+	private ProductDAO	productDao;
 
 	@Override
 	public List<Product> getAllProducts() {
@@ -25,8 +26,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getProductsByRange(Product startRange,
-			Product endingRange) {
+	public List<Product> getProductsByRange(Product startRange, Product endingRange) {
 		return this.productDao.getProductsByRange(startRange, endingRange);
 	}
 

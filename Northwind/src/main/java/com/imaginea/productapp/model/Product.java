@@ -10,28 +10,29 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product
+{
 
 	@Id
 	@Column(name = "PID")
 	@GeneratedValue
-	private Integer productID;
+	private Integer			productID;
 
 	@Column(name = "Name")
-	private String name;
+	private String			name;
 
 	@Column(name = "UnitPrice")
-	private BigDecimal price;
-	
+	private BigDecimal	price;
+
 	@Column(name = "QunatityPerUnit")
-	private int qunatityPerUnit;
-	
+	private int					qunatityPerUnit;
+
 	@Column(name = "UnitsInStock")
-	private int unitsInStock;
-	
+	private int					unitsInStock;
+
 	@Column(name = "UnitsOnOrder")
-	private int unitsOnOrder;
-	
+	private int					unitsOnOrder;
+
 	public int getQunatityPerUnit() {
 		return qunatityPerUnit;
 	}

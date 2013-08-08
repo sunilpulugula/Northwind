@@ -33,8 +33,8 @@
 		}
 		if (!(validateNumber(price, "price")
 				&& validateNumber(qunatityPerUnit, "QunatityPerUnit")
-				&& validateNumber(unitsInStock, "UnitsInStock")
-				&& validateNumber(unitsOnOrder, "UnitsOnOrder"))) {
+				&& validateNumber(unitsInStock, "UnitsInStock") && validateNumber(
+				unitsOnOrder, "UnitsOnOrder"))) {
 			return false;
 		}
 
