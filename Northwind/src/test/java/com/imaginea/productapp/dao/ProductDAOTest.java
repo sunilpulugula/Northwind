@@ -1,9 +1,9 @@
 package com.imaginea.productapp.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.imaginea.productapp.model.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/productapp-servlet.xml")
+@ContextConfiguration(locations = "/test-productapp-servlet.xml")
 @Transactional
 @Repository
 public class ProductDAOTest {
@@ -25,8 +25,8 @@ public class ProductDAOTest {
 
 	@Test
 	public void TestForCreateProduct() {
-		Product newProduct = createNewProduct("TV", 399.99f, 3, 12, 4);
-		;
+		Product newProduct = createNewProduct("TV", new BigDecimal(399.99), 3,
+				12, 4);
 		Integer productID = productDao.createProduct(newProduct);
 		Product existingProduct = productDao.getProductByID(productID);
 		Assert.assertEquals("Product not exist with the ID" + productID,
@@ -34,8 +34,7 @@ public class ProductDAOTest {
 		Assert.assertEquals("Product name is not equal", newProduct.getName(),
 				existingProduct.getName());
 		Assert.assertEquals("Product price is not equal",
-				(Object) newProduct.getPrice(),
-				(Object) existingProduct.getPrice());
+				newProduct.getPrice(), existingProduct.getPrice());
 		Assert.assertEquals("QunatityPerUnit is not equal",
 				newProduct.getQunatityPerUnit(),
 				existingProduct.getQunatityPerUnit());
@@ -49,7 +48,8 @@ public class ProductDAOTest {
 	public void TestForGetAllProducts() {
 
 		Integer preCount = productDao.getAllProducts().size();
-		productDao.createProduct(createNewProduct("TV", 399.99f, 3, 12, 4));
+		productDao.createProduct(createNewProduct("TV", new BigDecimal(399.99),
+				3, 12, 4));
 		Integer postCount = productDao.getAllProducts().size();
 		Assert.assertEquals("Count of product is not correct", preCount,
 				preCount);
@@ -88,11 +88,12 @@ public class ProductDAOTest {
 
 	@Test
 	public void TestForUpdateProduct() {
-		Product newProduct = createNewProduct("TV", 399.99f, 3, 12, 4);
+		Product newProduct = createNewProduct("TV", new BigDecimal(399.99), 3,
+				12, 4);
 		Integer productID = productDao.createProduct(newProduct);
 		Product existingProduct = productDao.getProductByID(productID);
 		existingProduct.setName("Washing Machine");
-		existingProduct.setPrice(699.99f);
+		existingProduct.setPrice(new BigDecimal(399.99));
 		productDao.saveProduct(existingProduct);
 
 		Product updatedProduct = productDao.getProductByID(productID);
@@ -101,8 +102,7 @@ public class ProductDAOTest {
 		Assert.assertEquals("Product name is not equal",
 				existingProduct.getName(), updatedProduct.getName());
 		Assert.assertEquals("Product price is not equal",
-				(Object) existingProduct.getPrice(),
-				(Object) updatedProduct.getPrice());
+				existingProduct.getPrice(), updatedProduct.getPrice());
 		Assert.assertEquals("QunatityPerUnit is not equal",
 				newProduct.getQunatityPerUnit(),
 				existingProduct.getQunatityPerUnit());
@@ -112,7 +112,7 @@ public class ProductDAOTest {
 				newProduct.getUnitsOnOrder(), existingProduct.getUnitsOnOrder());
 	}
 
-	private Product createNewProduct(String name, float price,
+	private Product createNewProduct(String name, BigDecimal price,
 			int qunatityPerUnit, int unitsInStock, int unitsOnOrder) {
 		Product newProduct = new Product();
 		newProduct.setName(name);

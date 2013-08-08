@@ -1,5 +1,6 @@
 package com.imaginea.productapp.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +70,7 @@ public class ProductAppController {
 
 		Integer productID = Integer.parseInt(request.getParameter("productID"));
 		String productname = request.getParameter("productName");
-		Float unitPrice = Float.parseFloat(request.getParameter("price"));
+		BigDecimal unitPrice = new BigDecimal(request.getParameter("price"));
 		Integer qunatityPerUnit = Integer.parseInt(request.getParameter("qunatityPerUnit"));
 		Integer unitsInStock = Integer.parseInt(request.getParameter("unitsInStock"));
 		Integer unitsOnOrder = Integer.parseInt(request.getParameter("unitsOnOrder"));
@@ -110,15 +111,14 @@ public class ProductAppController {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Applying Discount on all products");
 		}
-		Float discountPercentage = Float.parseFloat(request
+		BigDecimal discountPercentage = new BigDecimal(request
 				.getParameter("discount"));
 		List<Product> products = productService.getAllProducts();
 		for (Product product : products) {
-			if (product.getPrice() > 0) {
-				product.setPrice(((100 - discountPercentage) * product
-						.getPrice()) / 100);
+			BigDecimal price = product.getPrice();
+				BigDecimal dicountPrice = price.subtract((discountPercentage.divide(new BigDecimal(100)).multiply(price)));
+				product.setPrice(dicountPrice);
 				productService.saveProduct(product);
-			}
 		}
 		if (logger.isDebugEnabled()) {
 			logger.debug("Applied Discount on all products with a percentage :"
@@ -135,7 +135,7 @@ public class ProductAppController {
 			logger.debug("Adding new product");
 		}
 		String productname = request.getParameter("productName");
-		Float unitPrice = Float.parseFloat(request.getParameter("price"));
+		BigDecimal unitPrice = new BigDecimal(request.getParameter("price"));
 		Integer qunatityPerUnit = Integer.parseInt(request.getParameter("qunatityPerUnit"));
 		Integer unitsInStock = Integer.parseInt(request.getParameter("unitsInStock"));
 		Integer unitsOnOrder = Integer.parseInt(request.getParameter("unitsOnOrder"));

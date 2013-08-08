@@ -28,12 +28,10 @@ function validateForm(name) {
 		alert("Units On Order should not be empty!!!");
 		return false;
 	}
-	if (validateNumber(price, "price")
+	if (!(validateNumber(price, "price")
 			&& validateNumber(qunatityPerUnit, "QunatityPerUnit")
 			&& validateNumber(unitsInStock, "UnitsInStock")
-			&& validateNumber(unitsOnOrder, "UnitsOnOrder")) {
-		return true;
-	} else {
+			&& validateNumber(unitsOnOrder, "UnitsOnOrder"))) {
 		return false;
 	}
 

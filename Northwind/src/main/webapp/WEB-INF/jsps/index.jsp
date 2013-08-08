@@ -53,7 +53,7 @@ table.options {
 	border-collapse: collapse;
 }
 h6 {
-	font: bold 1.5em "Times New Roman", Times, serif;
+	font: bold 1.0em "Times New Roman", Times, serif;
 	color: RED;
 }
 </style>
@@ -110,7 +110,7 @@ h6 {
 <br></br>
 <br></br>
     <c:if test="${!empty message}">
-		<h6>Last Update: ${message}</h6>
+		<h6>Recent Action : ${message}</h6>
 	</c:if>
 
 	</Center>

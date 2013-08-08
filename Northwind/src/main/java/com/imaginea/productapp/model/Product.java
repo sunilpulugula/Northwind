@@ -1,5 +1,7 @@
 package com.imaginea.productapp.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +21,7 @@ public class Product {
 	private String name;
 
 	@Column(name = "UnitPrice")
-	private float price;
+	private BigDecimal price;
 	
 	@Column(name = "QunatityPerUnit")
 	private int qunatityPerUnit;
@@ -70,11 +72,11 @@ public class Product {
 		this.name = name;
 	}
 
-	public float getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 }
