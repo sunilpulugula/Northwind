@@ -22,39 +22,42 @@ public class ProductAppController
 
 	@Autowired
 	ProductService							productService;
+	private String							message			= null;
+	private final String				DEBUG				= "DEBUG";
+	private final String				INFORMATION	= "INFO";
+	private final String				WARNING			= "WARN";
+	private final String				ERROR				= "ERROR";
+	private final String				FATAL				= "FATAL";
 
-	private String							message	= null;
-
-	private static final Logger	logger	= Logger.getLogger(ProductAppController.class);
+	private static final Logger	logger			= Logger.getLogger(ProductAppController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String retriveAllProducts(ModelMap model) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Strated Executing method index in Product_App_Controller");
-		}
+		logThisMessage("Strated executing retriveAllProducts API in Product_App_Controller", DEBUG);
+		logThisMessage("Executing the service retrive all products ", DEBUG);
 		List<Product> products = productService.getAllProducts();
 		model.addAttribute("products", products);
 		if (getMessage() != null) {
 			model.addAttribute("message", getMessage());
 			setMessage(null);
 		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Ending execution of method index in Product_App_Controller");
-		}
+		logThisMessage("Execution of the retriveAllProducts API in Product_App_Controller is done", DEBUG);
 		return "index";
 	}
 
 	@RequestMapping("/delete/{productID}")
 	public String deleteProduct(@PathVariable("productID") Integer productID) {
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("Deleting product with product ID : " + productID);
+		logThisMessage("Deleting product with product ID : " + productID, INFORMATION);
+		Product product = productService.getProductByID(productID);
+		if (product != null) {
+			logThisMessage("Executing the service delete product ", DEBUG);
+			productService.deleteProduct(product);
+			setMessage("Product with Product ID " + productID + " is deleted.");
+			logThisMessage("Deletion of product with product ID : " + productID + " is done", INFORMATION);
+			return "redirect:/";
 		}
-		productService.deleteProduct(productService.getProductByID(productID));
-		if (logger.isDebugEnabled()) {
-			logger.debug("Deletion done sucessfull with product ID : " + productID);
-		}
-		setMessage("Product with Product ID " + productID + " is deleted.");
+		logThisMessage("Product with product ID " + productID + " does not exist", ERROR);
+		setMessage("Product with Product ID " + productID + " can not be deleted because product ID does no exist in the Repository");
 		return "redirect:/";
 	}
 
@@ -74,9 +77,7 @@ public class ProductAppController
 		Integer qunatityPerUnit = Integer.parseInt(request.getParameter("qunatityPerUnit"));
 		Integer unitsInStock = Integer.parseInt(request.getParameter("unitsInStock"));
 		Integer unitsOnOrder = Integer.parseInt(request.getParameter("unitsOnOrder"));
-		if (logger.isDebugEnabled()) {
-			logger.debug("Updating detail of the product with product ID : " + productID);
-		}
+		logThisMessage("Updating the product with product ID : " + productID, INFORMATION);
 		Product product = new Product();
 		product.setProductID(productID);
 		product.setName(productname);
@@ -84,11 +85,13 @@ public class ProductAppController
 		product.setQunatityPerUnit(qunatityPerUnit);
 		product.setUnitsInStock(unitsInStock);
 		product.setUnitsOnOrder(unitsOnOrder);
-		productService.saveProduct(product);
-		setMessage("Product with Product ID " + product.getProductID() + " is updated.");
-		if (logger.isDebugEnabled()) {
-			logger.debug("Updated detail of the product with product ID : " + productID);
+		logThisMessage("Executing the service save product ", DEBUG);
+		if (productService.saveProduct(product)) {
+			setMessage("Product with product ID " + product.getProductID() + " is updated.");
+			logThisMessage("Product with product ID : " + productID + " updated", INFORMATION);
+			return "redirect:/";
 		}
+		logThisMessage("Product with product ID " + productID + " failed to update", ERROR);
 		return "redirect:/";
 	}
 
@@ -105,29 +108,30 @@ public class ProductAppController
 	@RequestMapping(value = "/discount", method = RequestMethod.POST)
 	public String applyDiscount(HttpServletRequest request) {
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("Applying Discount on all products");
-		}
+		logThisMessage("Applying Discount on all products", INFORMATION);
 		BigDecimal discountPercentage = new BigDecimal(request.getParameter("discount"));
 		List<Product> products = productService.getAllProducts();
 		for (Product product : products) {
+			Integer productID = product.getProductID();
 			BigDecimal price = product.getPrice();
 			BigDecimal dicountPrice = price.subtract((discountPercentage.divide(new BigDecimal(100)).multiply(price)));
 			product.setPrice(dicountPrice);
-			productService.saveProduct(product);
+			logThisMessage("Executing the service save product for the product ID :" + productID, DEBUG);
+			if (productService.saveProduct(product)) {
+				logThisMessage("Discount is applied on the product with product ID :" + productID, INFORMATION);
+			}
+			else {
+				logThisMessage("Failed to apply discount on the product with product ID :" + productID, WARNING);
+			}
 		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Applied Discount on all products with a percentage :" + discountPercentage);
-		}
-		setMessage("Discount of " + discountPercentage + "% is applied on all Products ");
+		logThisMessage("Applied Discount on all products(which are elgible for discount) with a percentage :" + discountPercentage, INFORMATION);
+		setMessage("Discount of " + discountPercentage + "% is applied on all Products (which are elgible for discount)");
 		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addProduct(HttpServletRequest request) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Adding new product");
-		}
+		logThisMessage("Adding new product", DEBUG);
 		String productname = request.getParameter("productName");
 		BigDecimal unitPrice = new BigDecimal(request.getParameter("price"));
 		Integer qunatityPerUnit = Integer.parseInt(request.getParameter("qunatityPerUnit"));
@@ -139,11 +143,15 @@ public class ProductAppController
 		product.setQunatityPerUnit(qunatityPerUnit);
 		product.setUnitsInStock(unitsInStock);
 		product.setUnitsOnOrder(unitsOnOrder);
-		productService.createProduct(product);
-		setMessage("Product with Product ID " + product.getProductID() + " is created.");
-		if (logger.isDebugEnabled()) {
-			logger.debug("Added New product to repository with Product ID :" + product.getProductID());
+		logThisMessage("Executing the service create product", DEBUG);
+		Integer productID = productService.createProduct(product);
+		if (productID != null) {
+			setMessage("Product with Product ID " + productID + " is created.");
+			logThisMessage("Added new product to repository with product ID :" + productID, INFORMATION);
+			return "redirect:/";
 		}
+		logThisMessage("Unable to add new product ro repository ", ERROR);
+		setMessage("Failed to create new product");
 		return "redirect:/";
 	}
 
@@ -153,5 +161,29 @@ public class ProductAppController
 
 	private String getMessage() {
 		return message;
+	}
+
+	private void logThisMessage(String message, String severity) {
+		switch (severity) {
+			case "DEBUG":
+				if (logger.isDebugEnabled()) {
+					logger.debug(message);
+				}
+				break;
+			case "INFO":
+				if (logger.isInfoEnabled()) {
+					logger.info(message);
+				}
+				break;
+			case "WARN":
+				logger.warn(message);
+				break;
+			case "ERROR":
+				logger.error(message);
+				break;
+			case "FATAL":
+				logger.fatal(message);
+				break;
+		}
 	}
 }
