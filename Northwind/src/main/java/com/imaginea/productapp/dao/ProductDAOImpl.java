@@ -4,14 +4,21 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.imaginea.productapp.model.Product;
 
+@Service("ProductDAO")
 public class ProductDAOImpl implements ProductDAO
 {
 
+	private final SessionFactory	sessionFactory;
+
 	@Autowired
-	private SessionFactory	sessionFactory;
+	public ProductDAOImpl(SessionFactory sessionFactory) {
+		super();
+		this.sessionFactory = sessionFactory;
+	}
 
 	@Override
 	public List<Product> getAllProducts() {
@@ -19,41 +26,20 @@ public class ProductDAOImpl implements ProductDAO
 	}
 
 	@Override
-	public Product getProductByID(Integer ID) {
-		return (Product) sessionFactory.getCurrentSession().get(Product.class, ID);
+	public Product getProductByID(Integer id) {
+		return (Product) sessionFactory.getCurrentSession().get(Product.class, id);
 	}
 
 	@Override
-	public List<Product> getProductsByRange(Product startRange, Product endingRange) {
-		List<Product> list = sessionFactory.getCurrentSession()
-																				.createQuery("from Product where PID >= "
-																											+ "'"
-																											+ startRange.getProductID()
-																											+ "'"
-																											+ " AND PID <= "
-																											+ "'"
-																											+ endingRange.getProductID()
-																											+ "'")
-																				.list();
-		return list;
+	public void updateProduct(Product product) {
+		sessionFactory.getCurrentSession().clear();
+		sessionFactory.getCurrentSession().update(product);
 	}
 
 	@Override
-	public boolean saveProduct(Product product) {
-		if (product != null) {
-			sessionFactory.getCurrentSession().update(product);
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean deleteProduct(Product product) {
-		if (product != null) {
-			sessionFactory.getCurrentSession().delete(product);
-			return true;
-		}
-		return false;
+	public void deleteProduct(Product product) {
+		sessionFactory.getCurrentSession().clear();
+		sessionFactory.getCurrentSession().delete(product);
 	}
 
 	@Override

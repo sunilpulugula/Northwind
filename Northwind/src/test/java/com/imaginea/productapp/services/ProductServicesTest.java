@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,7 @@ public class ProductServicesTest
 		Product existingProduct = productService.getProductByID(productID);
 		existingProduct.setName("Washing Machine");
 		existingProduct.setPrice(new BigDecimal(699.99));
-		productService.saveProduct(existingProduct);
+		productService.updateProduct(existingProduct);
 
 		Product updatedProduct = productService.getProductByID(productID);
 		Assert.assertEquals("Product not exist with the ID" + productID, productID, updatedProduct.getProductID());
@@ -70,21 +69,6 @@ public class ProductServicesTest
 			productService.deleteProduct(product);
 			Product emptyProduct = productService.getProductByID(product.getProductID());
 			Assert.assertEquals("Product is not deleted with product ID" + product.getProductID(), null, emptyProduct);
-		}
-	}
-
-	@Test
-	public void TestForGetProductsByRange() {
-		List<Product> products = productService.getAllProducts();
-		Integer startIndex = products.get(0).getProductID();
-		Integer endingIndex = products.get(products.size() - 1).getProductID();
-		if (endingIndex > startIndex) {
-			List<Product> rangeProducts = productService.getProductsByRange(products.get(1), products.get(products.size() - 1));
-			Assert.assertEquals("Number products in the range is not correct", products.size() - 1, rangeProducts.size());
-		}
-		else {
-			List<Product> rangeProducts = productService.getProductsByRange(products.get(0), products.get(products.size() - 1));
-			Assert.assertEquals("Number products in the range is not correct", products.size(), rangeProducts.size());
 		}
 	}
 

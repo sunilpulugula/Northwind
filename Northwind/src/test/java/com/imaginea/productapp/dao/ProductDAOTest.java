@@ -47,21 +47,6 @@ public class ProductDAOTest
 	}
 
 	@Test
-	public void TestForGetProductsByRange() {
-		List<Product> products = productDao.getAllProducts();
-		Integer startIndex = products.get(0).getProductID();
-		Integer endingIndex = products.get(products.size() - 1).getProductID();
-		if (endingIndex > startIndex) {
-			List<Product> rangeProducts = productDao.getProductsByRange(products.get(1), products.get(products.size() - 1));
-			Assert.assertEquals("Number products in the range is not correct", products.size() - 1, rangeProducts.size());
-		}
-		else {
-			List<Product> rangeProducts = productDao.getProductsByRange(products.get(0), products.get(products.size() - 1));
-			Assert.assertEquals("Number products in the range is not correct", products.size(), rangeProducts.size());
-		}
-	}
-
-	@Test
 	public void TestForDeleteProduct() {
 		List<Product> products = productDao.getAllProducts();
 		if (products.size() > 0) {
@@ -79,7 +64,7 @@ public class ProductDAOTest
 		Product existingProduct = productDao.getProductByID(productID);
 		existingProduct.setName("Washing Machine");
 		existingProduct.setPrice(new BigDecimal(399.99));
-		productDao.saveProduct(existingProduct);
+		productDao.updateProduct(existingProduct);
 
 		Product updatedProduct = productDao.getProductByID(productID);
 		Assert.assertEquals("Product not exist with the ID" + productID, productID, updatedProduct.getProductID());

@@ -1,13 +1,15 @@
 <html>
 <head>
 <title>Spring Product Application - Northwind</title>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <script type="text/javascript">
-	function validateForm(name) {
-		var productName = document.forms[name]["productName"].value;
-		var price = document.forms[name]["price"].value;
-		var qunatityPerUnit = document.forms[name]["qunatityPerUnit"].value;
-		var unitsInStock = document.forms[name]["unitsInStock"].value;
-		var unitsOnOrder = document.forms[name]["unitsOnOrder"].value;
+	function validateForm() {
+		var productName = document.getElementById("productName").value;
+		var price = document.getElementById("price").value;
+		var qunatityPerUnit = document.getElementById("qunatityPerUnit").value;
+		var unitsInStock = document.getElementById("unitsInStock").value;
+		var unitsOnOrder = document.getElementById("unitsOnOrder").value;
 		if (productName == "" || productName == null) {
 			alert("Product name should not be empty!!!");
 			return false;
@@ -35,8 +37,7 @@
 			return false;
 		}
 
-		return confirm('Are you sure, you want to update product with ID : '
-				+ productID + ' ?');
+		return confirm('Are you sure, you want to create new product ?');
 	}
 
 	function validateNumber(value, name) {
@@ -49,6 +50,39 @@
 			return false;
 		}
 		return true;
+	}
+
+	function doAjaxPost() {
+		if (validateForm()) {
+			var productName = $('#productName').val();
+			var price = $('#price').val();
+			var qunatityPerUnit = $('#qunatityPerUnit').val();
+			var unitsInStock = $('#unitsInStock').val();
+			var unitsOnOrder = $('#unitsOnOrder').val();
+
+			$.ajax({
+				type : "POST",
+				url : "/Northwind/add",
+				data : "name=" + productName + "&price=" + price
+						+ "&qunatityPerUnit=" + qunatityPerUnit
+						+ "&unitsInStock=" + unitsInStock + "&unitsOnOrder="
+						+ unitsOnOrder,
+				success : function(response) {
+					$('#info').html(response);
+				},
+				error : function(error) {
+					$('#info').html(error);
+				}
+			});
+		}
+	}
+
+	function clean() {
+		document.getElementById("productName").value = '';
+		document.getElementById("price").value = '';
+		document.getElementById("qunatityPerUnit").value = '';
+		document.getElementById("unitsInStock").value = '';
+		document.getElementById("unitsOnOrder").value = '';
 	}
 </script>
 <style type="text/css">
@@ -87,6 +121,10 @@ h2 {
 	font: bold 1.5em "Times New Roman", Times, serif;
 	color: 3923D6;
 }
+h6 {
+	font: bold 0.75em "Times New Roman", Times, serif;
+	color: 3923D6;
+}
 </style>
 </head>
 <body>
@@ -94,36 +132,42 @@ h2 {
 		<h2>
 			<b>Provide New Product Details</b>
 		</h2>
-		<form method="post" action="add" name="createForm"
-			onsubmit="return validateForm('createForm')">
-			<table>
-				<tr>
-					<td>Product Name</td>
-					<td><input type="text" name="productName" id="productName" /></td>
-				</tr>
-				<tr>
-					<td>Unit Price</td>
-					<td><input type="text" name="price" id="price" /></td>
-				</tr>
-				<tr>
-					<td>QunatityPerUnit</td>
-					<td><input type="text" name="qunatityPerUnit"
-						id="qunatityPerUnit" " /></td>
-				</tr>
-				<tr>
-					<td>UnitsInStock</td>
-					<td><input type="text" name="unitsInStock" id="unitsInStock" " /></td>
-				</tr>
-				<tr>
-					<td>UnitsOnOrder</td>
-					<td><input type="text" name="unitsOnOrder" id="unitsOnOrder" " /></td>
-				</tr>
-				<tr>
-					<td colspan="2">             <input type="submit" value="Add" />
-					</td>
-				</tr>
-			</table>
-		</form>
+		<table>
+			<tr>
+				<td>Product Name</td>
+				<td><input type="text" name="productName" id="productName" /></td>
+			</tr>
+			<tr>
+				<td>Unit Price</td>
+				<td><input type="text" name="price" id="price" /></td>
+			</tr>
+			<tr>
+				<td>QunatityPerUnit</td>
+				<td><input type="text" name="qunatityPerUnit"
+					id="qunatityPerUnit" " /></td>
+			</tr>
+			<tr>
+				<td>UnitsInStock</td>
+				<td><input type="text" name="unitsInStock" id="unitsInStock" " /></td>
+			</tr>
+			<tr>
+				<td>UnitsOnOrder</td>
+				<td><input type="text" name="unitsOnOrder" id="unitsOnOrder" " /></td>
+			</tr>
+			<tr>
+				<td>             <input type="button" value="Add"
+					onclick="doAjaxPost()">
+				</td>
+				<td> <input type="button" value="Clean" onclick="clean()">
+				</td>
+			</tr>
+			<tr></tr>
+			<tr></tr>
+			<tr>
+				<td colspan="2"><div id="info" style="color: red;"></div></td>
+			</tr>
+		</table>
+		<h6><a href="/Northwind/">Go Home</a></h6>
 	</Center>
 </body>
 </html>

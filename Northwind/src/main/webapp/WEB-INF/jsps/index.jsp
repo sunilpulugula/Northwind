@@ -95,27 +95,20 @@ h6 {
 		</c:if>
 
 
-		<br>
-		<br>
-		<br>
+		<br> <br> <br>
 		<table class="options">
 			<tr>
 				<th><B>More Options</B></th>
 			</tr>
 			<tr>
 				<td><a href="addProduct">Add Product</a>
-				</li></td>
+					</li></td>
 			</tr>
 			<tr>
 				<td><a href="applyDiscount">Apply Discount</a>
-				</li></td>
+					</li></td>
 			</tr>
 		</table>
-		<br></br> <br></br>
-		<c:if test="${!empty message}">
-			<h6>Recent Action : ${message}</h6>
-		</c:if>
-
 	</Center>
 </body>
 </html>

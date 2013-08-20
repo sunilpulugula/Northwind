@@ -1,9 +1,11 @@
 <html>
 <head>
 <title>Spring Product Application - Northwind</title>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <script type="text/javascript">
-	function validateForm(name) {
-		var discount = document.forms[name]["discount"].value;
+	function validateForm() {
+		var discount = document.getElementById("discount").value;
 		if (discount == "" || discount == null) {
 			alert("Discount should not be empty!!!");
 			return false;
@@ -22,6 +24,23 @@
 
 	function validatePrice(price) {
 		return !isNaN(parseInt(price * 1));
+	}
+	
+	function doAjaxPost() {
+		if (validateForm()) {
+			var discount = $('#discount').val();
+			$.ajax({
+				type : "POST",
+				url : "/Northwind/discount",
+				data : "discount=" + discount,
+				success : function(response) {
+					$('#info').html(response);
+				},
+				error : function(error) {
+					$('#info').html(error);
+				}
+			});
+		}
 	}
 </script>
 <style type="text/css">
@@ -60,6 +79,10 @@ h2 {
 	font: bold 1.5em "Times New Roman", Times, serif;
 	color: 3923D6;
 }
+h6 {
+	font: bold 0.75em "Times New Roman", Times, serif;
+	color: 3923D6;
+}
 </style>
 </head>
 <body>
@@ -67,22 +90,26 @@ h2 {
 		<h2>
 			<b>Provide Discount percentage</b>
 		</h2>
-		<form method="post" action="discount" name="discountForm"
-			onsubmit="return validateForm('discountForm')">
-			<table>
-				<tr>
-					<td>Discount Percentage</td>
-					<td><input type="text" name="discount" id="discount" value"0.0"/></td>
-				</tr>
-				<tr>
-					<td colspan="2">             <input type="submit"
-						value="Apply Discount" />
-					</td>
-				</tr>
-			</table>
-		</form>
+		<table>
+			<tr>
+				<td>Discount Percentage</td>
+				<td><input type="text" name="discount" id="discount" value"0.0"/></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="button" value="Apply Discount"
+					onclick="doAjaxPost()">           </td>
+			</tr>
+			<tr></tr>
+			<tr></tr>
+			<tr>
+				<td colspan="2"><div id="info" style="color: red;"></div></td>
+			</tr>
+		</table>
 		<h6>Note: This Discount will be applicable on all products in the
 			repository.</h6>
+			<h6>
+				<a href="/Northwind/">Go Home</a>
+		</h6>
 	</Center>
 </body>
 </html>
