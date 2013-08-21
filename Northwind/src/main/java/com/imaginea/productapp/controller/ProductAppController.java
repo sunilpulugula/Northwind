@@ -1,7 +1,6 @@
 package com.imaginea.productapp.controller;
 
-import static com.imaginea.productapp.utilities.LoggerUtil.Message.DEBUG;
-import static com.imaginea.productapp.utilities.LoggerUtil.Message.INFO;
+import static com.imaginea.productapp.utilities.LoggerUtil.Message.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,6 +23,7 @@ import com.imaginea.productapp.services.ProductService;
 import com.imaginea.productapp.utilities.LoggerUtil;
 
 @Controller
+@RequestMapping(value = "/productApp")
 public class ProductAppController
 {
 
@@ -47,10 +47,16 @@ public class ProductAppController
 	@RequestMapping("/delete/{productID}")
 	public String deleteProduct(@PathVariable("productID") Integer productID) {
 		loggerUtil.log(INFO, "Deleting product with product ID : " + productID);
-		Product product = productService.getProductByID(productID);
-		productService.deleteProduct(product);
-		loggerUtil.log(INFO, "Product with product ID " + productID + " is deleted");
-		return "redirect:/";
+		try {
+			Product product = productService.getProductByID(productID);
+			productService.deleteProduct(product);
+			loggerUtil.log(INFO, "Product with product ID " + productID + " is deleted");
+		}
+		catch (IllegalArgumentException | NullPointerException e) {
+			loggerUtil.log(ERROR, "Failed to delete Product");
+			loggerUtil.log(ERROR, e.getStackTrace().toString());
+		}
+		return "redirect:/productApp/";
 	}
 
 	@RequestMapping("/edit/{productID}")
@@ -64,8 +70,16 @@ public class ProductAppController
 	public @ResponseBody
 	String editProduct(@ModelAttribute(value = "product") Product product, BindingResult result) {
 		loggerUtil.log(INFO, "Updating the product with product ID : " + product.getProductID());
-		productService.updateProduct(product);
-		return "Product with product ID " + product.getProductID() + " is updated.";
+		try {
+			productService.updateProduct(product);
+			return "Product with product ID " + product.getProductID() + " is updated.";
+		}
+		catch (IllegalArgumentException | NullPointerException e) {
+			loggerUtil.log(ERROR, "Failed to Update Product with Product ID :" + product.getProductID());
+			loggerUtil.log(ERROR, e.getStackTrace().toString());
+			return "Product with product ID " + product.getProductID() + " is not updated.";
+		}
+
 	}
 
 	@RequestMapping(value = "/addProduct")
@@ -81,22 +95,36 @@ public class ProductAppController
 	@RequestMapping(value = "/discount", method = RequestMethod.POST)
 	public @ResponseBody
 	String applyDiscount(@RequestParam(value = "discount") BigDecimal discount) {
-		productService.applyDiscount(discount);
-		String message = null;
-		message = "Discount of " + discount + "% is applied on all products";
-		loggerUtil.log(INFO, message);
-		return message;
+		try {
+			productService.applyDiscount(discount);
+			String message = "Discount of " + discount + "% is applied on all products";
+			loggerUtil.log(INFO, message);
+			return message;
+		}
+		catch (IllegalArgumentException | NullPointerException e) {
+			loggerUtil.log(ERROR, "Failed to apply discount on all products");
+			loggerUtil.log(ERROR, e.getStackTrace().toString());
+			return "Failed to apply discount on all products ";
+		}
+
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public @ResponseBody
 	String addProduct(@ModelAttribute(value = "product") Product product, BindingResult result) {
 		loggerUtil.log(DEBUG, "Adding new product");
-		Integer productID = productService.createProduct(product);
-		String message = null;
-		message = " New Product is added in the Inventory with the product ID :" + productID;
-		loggerUtil.log(INFO, message);
-		return message;
+		try {
+			Integer productID = productService.createProduct(product);
+			String message = " New Product is added in the Inventory with the product ID :" + productID;
+			loggerUtil.log(INFO, message);
+			return message;
+		}
+		catch (IllegalArgumentException | NullPointerException e) {
+			loggerUtil.log(ERROR, "Failed to create product in inventory");
+			loggerUtil.log(ERROR, e.getStackTrace().toString());
+			return "Failed to create product in inventory";
+		}
+
 	}
 
 }

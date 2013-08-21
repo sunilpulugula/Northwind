@@ -11,15 +11,12 @@
 	<servlet>
 		<servlet-name>productapp</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>productapp</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-
 	<!-- If you want to change the handler mapping file name(other then productapp-servlet.xml) 
 		then you can use this context listener else not required. <listener> <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
 		</listener> <context-param> <param-name>contextConfigLocation</param-name> 

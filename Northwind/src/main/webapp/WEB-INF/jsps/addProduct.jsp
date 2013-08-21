@@ -62,7 +62,7 @@
 
 			$.ajax({
 				type : "POST",
-				url : "/Northwind/add",
+				url : "/Northwind/productApp/add",
 				data : "name=" + productName + "&price=" + price
 						+ "&qunatityPerUnit=" + qunatityPerUnit
 						+ "&unitsInStock=" + unitsInStock + "&unitsOnOrder="
@@ -167,7 +167,7 @@ h6 {
 				<td colspan="2"><div id="info" style="color: red;"></div></td>
 			</tr>
 		</table>
-		<h6><a href="/Northwind/">Go Home</a></h6>
+		<h6><a href="/Northwind/productApp/">Go Home</a></h6>
 	</Center>
 </body>
 </html>

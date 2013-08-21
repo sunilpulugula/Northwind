@@ -67,7 +67,7 @@
 
 			$.ajax({
 				type : "POST",
-				url : "/Northwind/edit",
+				url : "/Northwind/productApp/edit",
 				data : "productID=" + productID +  "&name=" + productName + "&price=" + price
 						+ "&qunatityPerUnit=" + qunatityPerUnit
 						+ "&unitsInStock=" + unitsInStock + "&unitsOnOrder="
@@ -174,7 +174,7 @@ h6 {
 			</table>
 		</c:if>
 		<h6>
-				<a href="/Northwind/">Go Home</a>
+				<a href="/Northwind/productApp/">Go Home</a>
 		</h6>
 	</Center>
 </body>

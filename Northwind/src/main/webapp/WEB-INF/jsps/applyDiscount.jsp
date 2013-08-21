@@ -31,7 +31,7 @@
 			var discount = $('#discount').val();
 			$.ajax({
 				type : "POST",
-				url : "/Northwind/discount",
+				url : "/Northwind/productApp/discount",
 				data : "discount=" + discount,
 				success : function(response) {
 					$('#info').html(response);
@@ -108,7 +108,7 @@ h6 {
 		<h6>Note: This Discount will be applicable on all products in the
 			repository.</h6>
 			<h6>
-				<a href="/Northwind/">Go Home</a>
+				<a href="/Northwind/productApp/">Go Home</a>
 		</h6>
 	</Center>
 </body>
