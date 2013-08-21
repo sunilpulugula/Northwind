@@ -79,11 +79,10 @@ public class ProductServiceImpl implements ProductService
 		checkNotNull(product, "Product should not be NULL");
 		checkNotNull(product.getPrice(), "Product Price cant be NULL");
 		checkNotNull(product.getName(), "Product Name cant be NULL");
-		checkNotNull(product.getQunatityPerUnit(), "Quantity per Unit cant be NULL");
-		checkNotNull(product.getUnitsInStock(), "Units In stock cant be NULL");
 		checkArgument(product.getPrice().intValue() >= 0, "Product Price should not be negative");
 		checkArgument(product.getQunatityPerUnit() >= 0, "Quantity per Unit should not be negative");
 		checkArgument(product.getUnitsInStock() >= 0, "Units in stock should not be negative");
+		checkArgument(product.getUnitsOnOrder() >=0 ,"Units On Order cant be negative");
 	}
 	
 	@Override
