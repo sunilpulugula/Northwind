@@ -24,7 +24,7 @@ import com.imaginea.productapp.model.Product;
 public class ProductServiceTests
 {
 
-	private static final Integer	ID	= 1;
+	private static final Integer	ID	= 1; 
 
 	@Mock
 	private ProductDAO						productDAO;

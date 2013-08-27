@@ -110,13 +110,6 @@ body {
 	background-color: "lightsalmon"
 }
 
-form {
-	display: block;
-	background-color: A6DEEE;
-	padding: 20px;
-	width: 540px; /*200 + 300 + (20 * 2)*/
-}
-
 h2 {
 	font: bold 1.5em "Times New Roman", Times, serif;
 	color: 3923D6;

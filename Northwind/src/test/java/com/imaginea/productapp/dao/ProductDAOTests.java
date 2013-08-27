@@ -25,7 +25,7 @@ import com.imaginea.productapp.model.Product;
 public class ProductDAOTests
 {
 
-	private final static Integer	ID	= 1;
+	private final static Integer	ID	= 1; 
 
 	@Mock
 	private SessionFactory				sessionFactory;
