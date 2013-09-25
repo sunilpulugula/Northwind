@@ -1,6 +1,8 @@
 package com.imaginea.productapp.controller;
 
-import static com.imaginea.productapp.utilities.LoggerUtil.Message.*;
+import static com.imaginea.productapp.utilities.LoggerUtil.Message.DEBUG;
+import static com.imaginea.productapp.utilities.LoggerUtil.Message.ERROR;
+import static com.imaginea.productapp.utilities.LoggerUtil.Message.INFO;
 
 import java.math.BigDecimal;
 import java.util.List;
